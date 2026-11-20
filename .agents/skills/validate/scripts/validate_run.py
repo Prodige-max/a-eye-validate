@@ -19,6 +19,18 @@ SOURCE_RELATIONSHIPS = {"independent", "incumbent/vendor", "operator-supplied", 
 RESEARCH_GROUPS = {"complaints/workarounds", "products/services", "cost/resource benchmarks",
                    "technical/operational verification"}
 DIMENSION_WEIGHTS = {"demand": 25, "unmet_need": 25, "net_savings": 30, "feasibility": 20}
+CRITERION_WEIGHTS = {
+    "buyer_pain": 7, "frequency_severity": 7, "workaround_cost": 5, "buying_signal": 6,
+    "incumbent_gap": 8, "substitute_adequacy": 6, "differentiation": 6, "switching_access": 5,
+    "baseline_quality": 5, "base_roi": 8, "downside_roi": 6, "payback": 4,
+    "value_realization": 4, "full_cost_sensitivity": 3,
+    "data_access": 4, "integration": 4, "accuracy_review": 4, "security_compliance": 3,
+    "workflow_adoption": 3, "delivery_support": 2,
+}
+VERIFICATION_FACTORS = {
+    "verified": 1.0, "strong": 0.9, "moderate": 0.7,
+    "weak": 0.4, "assumed": 0.2, "missing": 0.0,
+}
 MARKET_TEST_STAGES = {"hypothesis", "public evidence", "buyer discovery", "baseline validated",
                       "controlled pilot", "repeatability proven"}
 PILOT_GATES = {"verified_buyer_pain", "incumbent_comparison", "validated_operating_baseline",
@@ -41,7 +53,7 @@ def is_url(value: object) -> bool:
 def validate(record: dict) -> list[str]:
     errors: list[str] = []
     required = {"run_id", "status", "validated_on", "scope", "independent_research", "counts", "evidence_lifecycle",
-                "dimension_scores", "roi", "score", "confidence", "market_test_stage", "pilot_gates", "verdict",
+                "dimension_scores", "criterion_scores", "evidence_coverage_percent", "roi", "score", "confidence", "market_test_stage", "pilot_gates", "verdict",
                 "top_unknown", "next_step", "evidence"}
     require(required <= record.keys(), f"missing top-level fields: {sorted(required - record.keys())}", errors)
     if errors:
@@ -124,28 +136,63 @@ def validate(record: dict) -> list[str]:
                     "net_savings 4 or 5 requires positive downside ROI", errors)
             require(payback is not None, "net_savings 4 or 5 requires base payback", errors)
 
+    criteria = record["criterion_scores"]
+    require(isinstance(criteria, list), "criterion_scores must be an array", errors)
+    seen_criteria: set[str] = set()
+    calculated_score = 0.0
+    calculated_coverage = 0.0
+    if isinstance(criteria, list):
+        for index, item in enumerate(criteria):
+            prefix = f"criterion_scores[{index}]"
+            require(isinstance(item, dict), f"{prefix} must be an object", errors)
+            if not isinstance(item, dict):
+                continue
+            criterion_id = item.get("id")
+            require(criterion_id in CRITERION_WEIGHTS, f"{prefix}.id is invalid", errors)
+            require(criterion_id not in seen_criteria, f"duplicate criterion id: {criterion_id}", errors)
+            seen_criteria.add(criterion_id)
+            if criterion_id not in CRITERION_WEIGHTS:
+                continue
+            weight = item.get("weight")
+            require(weight == CRITERION_WEIGHTS[criterion_id],
+                    f"{prefix}.weight must be {CRITERION_WEIGHTS[criterion_id]}", errors)
+            rating = item.get("rating")
+            verification = item.get("verification")
+            points = item.get("points")
+            require(rating is None or (isinstance(rating, int) and not isinstance(rating, bool) and 0 <= rating <= 5),
+                    f"{prefix}.rating must be an integer 0..5 or null", errors)
+            require(verification in VERIFICATION_FACTORS, f"{prefix}.verification is invalid", errors)
+            require(isinstance(points, (int, float)) and not isinstance(points, bool) and 0 <= points <= weight,
+                    f"{prefix}.points must be a number from 0 to its weight", errors)
+            if verification in VERIFICATION_FACTORS:
+                factor = VERIFICATION_FACTORS[verification]
+                require((verification == "missing") == (rating is None),
+                        f"{prefix}: missing verification and null rating must be used together", errors)
+                expected_points = 0.0 if rating is None else round(weight * rating / 5 * factor, 2)
+                if isinstance(points, (int, float)) and not isinstance(points, bool):
+                    require(abs(points - expected_points) < 0.011,
+                            f"{prefix}.points must equal calculated value {expected_points:g}", errors)
+                    calculated_score += expected_points
+                calculated_coverage += weight * factor
+        require(seen_criteria == set(CRITERION_WEIGHTS),
+                f"criterion_scores must contain exactly the 20 required criteria; missing {sorted(set(CRITERION_WEIGHTS) - seen_criteria)}",
+                errors)
+
+    calculated_score = round(calculated_score, 2)
+    calculated_coverage = round(calculated_coverage, 2)
     score = record["score"]
-    low, high = score.get("low"), score.get("high")
-    require(isinstance(low, (int, float)) and not isinstance(low, bool) and 0 <= low <= 100, "score.low must be 0..100", errors)
-    require(isinstance(high, (int, float)) and not isinstance(high, bool) and 0 <= high <= 100, "score.high must be 0..100", errors)
-    if isinstance(low, (int, float)) and isinstance(high, (int, float)):
-        require(low <= high, "score.low cannot exceed score.high", errors)
-    if isinstance(dimensions, dict) and set(dimensions) == set(DIMENSION_WEIGHTS):
-        values_are_valid = all(
-            value is None or (isinstance(value, int) and not isinstance(value, bool) and 0 <= value <= 5)
-            for value in dimensions.values()
-        )
-        if values_are_valid:
-            expected_low = sum(
-                dimensions[field] * weight / 5
-                for field, weight in DIMENSION_WEIGHTS.items()
-                if dimensions[field] is not None
-            )
-            expected_high = expected_low + sum(
-                weight for field, weight in DIMENSION_WEIGHTS.items() if dimensions[field] is None
-            )
-            require(low == expected_low, f"score.low must equal calculated lower bound {expected_low:g}/100", errors)
-            require(high == expected_high, f"score.high must equal calculated upper bound {expected_high:g}/100", errors)
+    value = score.get("value") if isinstance(score, dict) else None
+    require(isinstance(value, (int, float)) and not isinstance(value, bool) and 0 <= value <= 100,
+            "score.value must be 0..100", errors)
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        require(abs(value - calculated_score) < 0.011,
+                f"score.value must equal calculated verified score {calculated_score:g}/100", errors)
+    coverage = record["evidence_coverage_percent"]
+    require(isinstance(coverage, (int, float)) and not isinstance(coverage, bool) and 0 <= coverage <= 100,
+            "evidence_coverage_percent must be 0..100", errors)
+    if isinstance(coverage, (int, float)) and not isinstance(coverage, bool):
+        require(abs(coverage - calculated_coverage) < 0.011,
+                f"evidence_coverage_percent must equal calculated coverage {calculated_coverage:g}/100", errors)
 
     require(record["confidence"] in {"low", "medium", "high"}, "invalid confidence", errors)
     require(record["market_test_stage"] in MARKET_TEST_STAGES, "invalid market_test_stage", errors)
@@ -160,6 +207,12 @@ def validate(record: dict) -> list[str]:
         require(isinstance(gates, dict) and set(gates) == PILOT_GATES and all(gates.values()),
                 "pilot verdict requires all four pilot gates", errors)
         require(record["confidence"] != "low", "pilot verdict requires medium or high confidence", errors)
+        require(isinstance(coverage, (int, float)) and coverage >= 60,
+                "pilot verdict requires at least 60/100 evidence coverage", errors)
+        critical_roi = {item.get("id"): item.get("verification") for item in criteria if isinstance(item, dict)}
+        require(all(VERIFICATION_FACTORS.get(critical_roi.get(key), 0) >= 0.7
+                    for key in ("baseline_quality", "base_roi", "downside_roi", "payback")),
+                "pilot verdict requires at least moderate verification of baseline, base ROI, downside ROI and payback", errors)
     require(bool(str(record["top_unknown"]).strip()), "top_unknown is required", errors)
     require(bool(str(record["next_step"]).strip()), "next_step is required", errors)
 
