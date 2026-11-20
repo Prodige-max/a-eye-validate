@@ -7,7 +7,7 @@ description: Research market validation, workflow gaps, competitors, buyer savin
 
 Produce an evidence-bounded market-validation decision, not a market-size claim. The repository contains the method; web search supplies current public evidence; the operator's authorized Notion destination holds run history.
 
-Read [references/rubric.md](references/rubric.md) before scoring and [references/report-template.md](references/report-template.md) before composing or saving a report.
+Read [references/rubric.md](references/rubric.md) before scoring, [references/report-template.md](references/report-template.md) before composing or saving a report, [references/interview-baseline.md](references/interview-baseline.md) before recommending buyer discovery, and [references/notion-setup.md](references/notion-setup.md) before persistence.
 
 ## Invocation and inputs
 
@@ -25,11 +25,15 @@ Create one stable run ID before research: `AEYE-YYYYMMDD-<scope-slug>-<8-char-su
 - Use a calculator or runtime for arithmetic when useful. Preserve units and calculate from unrounded inputs.
 - Cite the canonical URL beside each material claim. Search-result totals and snippets are discovery aids, not evidence of demand.
 
+## Capability preflight
+
+Before research, record whether web search, Notion read, and Notion write are available. Resolve the authorized Notion destination without hard-coding its workspace ID. If a capability is missing, use the matching degraded mode and continue where the evidence permits.
+
 ## Workflow
 
 ### 1. Scope and plan
 
-Normalize the industry, geography, buyer, workflow, date window, currency, and candidate solution. Use ZAR in South Africa. Define what constitutes a relevant firsthand complaint, an identifiable complainant, an identifiable organization, a direct-fit offering, and a partial-fit offering before counting.
+Normalize the industry, geography, buyer, workflow, date window, currency, and candidate solution. Narrow broad buyers such as “financial services” into the decision owner, operator, and approver whose baseline is being measured. Use ZAR in South Africa. Define what constitutes a relevant firsthand complaint, an identifiable complainant, an identifiable organization, a direct-fit offering, and a partial-fit offering before counting.
 
 ### 2. Read Notion first
 
@@ -66,7 +70,7 @@ For each offering record target buyer, exact workflow stages covered, important 
 
 ### 6. Model the buyer business case
 
-Create low, base, and high cases. For every input show value, unit, currency, status (`measured`, `sourced`, or `assumed`), source/evidence ID, and scenario applicability.
+Create low, base, and high cases. Use the baseline worksheet in `references/interview-baseline.md`. For every input show value, unit, currency, status (`measured`, `sourced`, or `assumed`), source/evidence ID, and scenario applicability.
 
 ```text
 annual_hours_recovered = monthly_case_volume * 12 * eligible_share * adoption_share * net_minutes_saved_per_handled_case / 60
@@ -76,7 +80,7 @@ year_one_net_economic_value = annual_recurring_net_economic_value - one_time_imp
 simple_payback_months = one_time_implementation_costs / (annual_recurring_net_economic_value / 12)
 ```
 
-Calculate payback only when recurring net value is positive. `net_minutes_saved` must already subtract review, exceptions, and rework. Keep realizable cash savings separate from released staff capacity; do not double count. Call capacity-based payback **economic payback**. Claim cash payback only with a positive, supported cash-flow case. Leave a result unknown when required inputs are missing, or label the scenario explicitly hypothetical. Show the largest sensitivities and the buyer measurements needed to replace assumptions.
+Calculate payback only when recurring net value is positive. `net_minutes_saved` must already subtract review, exceptions, and rework. Keep realizable cash savings separate from released staff capacity; do not double count. Call capacity-based payback **economic payback**. Claim cash payback only with a positive, supported cash-flow case. Leave a result unknown when required inputs are missing, or label the scenario explicitly hypothetical. Do not award a known net-savings score from hypothetical inputs alone. Show the largest sensitivities and the buyer measurements needed to replace assumptions.
 
 ### 7. Score and apply the interview gate
 
@@ -84,15 +88,17 @@ Use the written anchors and verdict rules in `references/rubric.md`. Score each 
 
 For an unknown dimension, show a range: zero contribution at the lower endpoint and its full weight at the upper endpoint. Do not hide uncertainty behind a midpoint. Rate confidence separately from the score.
 
-A **pilot** requires all four gates: verified buyer pain, comparison with incumbents, a validated operating baseline, and a plausible integration/approval route. Without all four, the verdict cannot be pilot. Hypothetical positive economics may justify **interview first**, not pilot.
+A **pilot** requires all four gates: verified buyer pain, comparison with incumbents, a validated operating baseline, and a plausible integration/approval route. Without all four, the verdict cannot be pilot. Hypothetical positive economics may justify **interview first**, not pilot. When interviews are needed, prescribe a bounded round using the questions and measurement worksheet in `references/interview-baseline.md`.
 
 ### 8. Save idempotently to Notion
 
-Use one page per run beneath the authorized parent or in the authorized database. Put the stable run ID in a title or property and include normalized industry, geography, buyer, and workflow in searchable properties or the page header.
+Follow `references/notion-setup.md`. Use one page per run beneath the authorized parent or in the authorized database. Put the stable run ID in a title or property and include normalized industry, geography, buyer, and workflow in searchable properties or the page header.
 
 Before creating, look up the run ID within the authorized destination. If found, update that page. If not found, create one page containing the full report and source-level evidence table. After an uncertain write, search for the same run ID before retrying; update a found page and never create a second page. Report success only after a successful page response or a read-back that verifies the page.
 
 If the destination is missing or write access is unavailable, return the complete report as Markdown with the run ID and name the exact missing destination or permission. Do not commit it to the repository.
+
+Maintain a portable structured run record matching `references/run-record.schema.json`. When the repository runtime is available, validate it with `python3 .agents/skills/validate/scripts/validate_run.py <run.json>` before persistence. The record is an interchange artifact; do not commit real run data by default.
 
 ## Failure and degraded modes
 
