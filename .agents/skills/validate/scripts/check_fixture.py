@@ -4,16 +4,21 @@
 from __future__ import annotations
 
 import json
+from copy import deepcopy
 from datetime import date
 from pathlib import Path
+
+from validate_run import validate as validate_run_record
 
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "fixtures" / "acceptance.json"
+VALID_RUN = ROOT / "fixtures" / "valid-run.json"
 SKILL = ROOT / "SKILL.md"
 REPORT_TEMPLATE = ROOT / "references" / "report-template.md"
 REQUIRED_REFERENCES = (
     ROOT / "references" / "interview-baseline.md",
+    ROOT / "references" / "idea-scorecard.md",
     ROOT / "references" / "notion-setup.md",
     ROOT / "references" / "run-record.schema.json",
     ROOT / "references" / "web-collection.md",
@@ -77,7 +82,9 @@ def main() -> None:
     assert "Every Validate run must perform fresh independent external research" in skill_text
     assert "Independent external research not completed" in skill_text
     assert "scripts/validate_run.py" in skill_text
+    assert "references/idea-scorecard.md" in skill_text
     assert "## Portable run record" in report_text
+    assert "### Scoring diagnostics" in report_text
     assert "## Supplied-claim verification" in report_text
     assert "**Independent research:** completed | partial" in report_text
     assert observed_counts(data["evidence"]) == {
@@ -88,6 +95,14 @@ def main() -> None:
                                  "recurring_zar": 120000.0, "year_one_zar": 40000.0,
                                  "payback_months": 8.0}
     assert score_range(data["scores"]) == (43.0, 73.0)
+    run_record = json.loads(VALID_RUN.read_text(encoding="utf-8"))
+    assert validate_run_record(run_record) == []
+    wrong_score = deepcopy(run_record)
+    wrong_score["score"]["high"] = 72
+    assert any("calculated upper bound 73/100" in error for error in validate_run_record(wrong_score))
+    premature_pilot = deepcopy(run_record)
+    premature_pilot["verdict"] = "pilot"
+    assert any("all four pilot gates" in error for error in validate_run_record(premature_pilot))
     degraded = data["degraded"]
     assert degraded["web_search_available"] is False and degraded["unsupported_counts"] == "unknown"
     assert degraded["notion_write_available"] is False and degraded["fallback_complete"] is True
@@ -102,6 +117,7 @@ def main() -> None:
     print("PASS freshness: E6 refresh required; E7 current")
     print("PASS ROI: 600 h; R180,000 capacity; R120,000 recurring; R40,000 year one; 8 months")
     print("PASS score: 43-73/100")
+    print("PASS score enforcement: arithmetic and pilot gates")
     print("PASS degraded modes: unknown counts, Markdown fallback, idempotent retry")
 
 
