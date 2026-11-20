@@ -1,0 +1,31 @@
+{
+  "run_id": "AEYE-20261120-fixture-a1b2c3d4",
+  "status": "complete",
+  "validated_on": "2026-11-20",
+  "scope": {
+    "industry": "Financial services",
+    "geography": "South Africa",
+    "buyer": "Head of Credit Operations",
+    "workflow": "Affordability assessment",
+    "currency": "ZAR"
+  },
+  "counts": {
+    "complainants": 2,
+    "affected_organizations": 2,
+    "unknown_identity_items": 1,
+    "offerings": 2,
+    "direct_fit": 1
+  },
+  "evidence_lifecycle": {"reused": 0, "refreshed": 1, "new": 7},
+  "score": {"low": 43, "high": 73},
+  "confidence": "medium",
+  "verdict": "interview first",
+  "top_unknown": "Measured exception handling time",
+  "next_step": "Measure 30 representative cases",
+  "notion_page_url": null,
+  "save_error": "Synthetic fixture: persistence intentionally unavailable",
+  "evidence": [
+    {"id": "E01", "url": "https://fixture.invalid/evidence/1", "type": "firsthand complaint", "last_verified": "2026-11-20", "lifecycle": "new"},
+    {"id": "E02", "url": "https://fixture.invalid/evidence/2", "type": "solution", "last_verified": "2026-11-20", "lifecycle": "refreshed"}
+  ]
+}
