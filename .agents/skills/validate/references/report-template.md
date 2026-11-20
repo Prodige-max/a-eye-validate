@@ -21,6 +21,7 @@ Use Markdown that pastes cleanly into Notion. Do not omit sections; use `unknown
 - Evidence lifecycle: <reused> reused; <refreshed> refreshed; <new> new
 - Score: <N/100 or L–U/100>
 - Confidence: <low/medium/high> — <limiting factors>
+- Market-test stage: <hypothesis/public evidence/buyer discovery/baseline validated/controlled pilot/repeatability proven>
 - Verdict: <pilot/interview first/re-scope/deprioritize>
 - Top unknown: <one decision-critical unknown>
 - Next step: <one bounded action>
@@ -97,6 +98,19 @@ Buyer data needed: <measurements needed to validate assumptions>.
 **Total:** <N or L–U>/100  
 **Confidence:** <rating and rationale>  
 **Pilot gates:** pain <yes/no>; incumbent comparison <yes/no>; validated baseline <yes/no>; integration route <yes/no>.
+
+### Scoring diagnostics
+
+| Dimension | Confirmed criteria | Missing or conflicting criteria | Red flags |
+|---|---|---|---|
+| Demand | buyer fit, firsthand pattern, frequency, severity, workarounds, buying signal, baseline quality | ... | ... |
+| Unmet need | direct coverage, incumbent outcome, substitutes, gap materiality, access/switching, differentiation, defensibility | ... | ... |
+| Net savings | baseline, gross value, full cost, downside, realization, payback, sensitivity | ... | ... |
+| Feasibility | data, integration, accuracy/exceptions, security/compliance, adoption, delivery, approval route | ... | ... |
+
+**Market-test stage:** <stage and why the next stage is not yet complete>.  
+**Override:** <none, or the red-flag fact that limits commitment>.  
+**Next experiment:** <falsifiable hypothesis; sample/owner; required evidence; pass/fail/stop thresholds; time/cost boundary; resulting decision>.
 
 ## Source-level evidence
 
