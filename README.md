@@ -14,6 +14,12 @@ In clients with skill mentions, select `$validate`.
 
 The skill uses the session's hosted web search and, when authorized, its Notion connection. It requires no Windows host, Docker daemon, crawler subscription, job worker, or separate model API.
 
+## Independent research is mandatory
+
+Every run performs fresh external research, even when it starts from a supplied PDF, repository, business plan, interview, or prior Notion report. Supplied material is treated as claims to verify. Validate seeks independent buyer evidence, official incumbent documentation, and non-vendor benchmarks; it reports supplied claims as corroborated, contradicted, or unverified.
+
+If web search is unavailable, the result is explicitly partial and cannot be presented as a definitive market-gap, demand, savings, competitor, or enterprise-readiness conclusion.
+
 ## Bounded web collector
 
 Validate includes a robots-aware collector that converts approved public seed pages and bounded same-host links into auditable JSONL. Hosted search remains responsible for broad discovery; the collector does not bypass access controls or turn page counts into market evidence automatically.
