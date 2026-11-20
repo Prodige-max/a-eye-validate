@@ -47,7 +47,19 @@ The written anchors in `rubric.md` determine the integer dimension score. Use th
 - **Downside:** Is the conservative scenario positive after full cost?
 - **Realization:** Can released capacity become cash savings, throughput, service improvement, risk reduction, or another owned outcome?
 - **Payback:** Is economic payback acceptable to this buyer, and is cash payback separately supported?
+- **ROI:** What are low, base, and high year-one ROI after all recurring and implementation costs, and does the base case clear a documented buyer hurdle?
+- **ROI basis:** Is the result measured, sourced, mixed, hypothetical, or unknown? Hypothetical ROI cannot produce a known Net Savings score.
 - **Sensitivity:** Which two inputs can reverse the decision?
+
+Calculate year-one ROI consistently:
+
+```text
+year_one_total_benefit = annual_capacity_value + independently_verified_annual_savings
+year_one_total_cost = annual_running_costs + one_time_implementation_costs
+year_one_roi_percent = (year_one_total_benefit - year_one_total_cost) / year_one_total_cost * 100
+```
+
+Label capacity-led results **economic ROI**. Report **cash ROI** only when the numerator uses realizable cash inflows or cost reductions with an owner and realization plan. ROI is evaluated inside Net Savings; it does not add extra points beyond that dimension's 30-point weight.
 
 ### Feasibility — 20 points
 
