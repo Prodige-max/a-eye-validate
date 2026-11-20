@@ -102,6 +102,10 @@ Buyer data needed: <measurements needed to validate assumptions>.
 Notion page: <verified URL, or exact error and destination/permission required>.
 ```
 
+## Portable run record
+
+For automation or deferred persistence, also produce a JSON record matching `run-record.schema.json`. Validate it with `scripts/validate_run.py` when the repository runtime is available. Keep real run records out of version control unless the operator explicitly asks to add a sanitized fixture.
+
 ## Synthetic acceptance fixture
 
 The machine-readable fixture is `fixtures/acceptance.json`; `scripts/check_fixture.py` verifies it. It contains two identifiable firsthand complainants at two companies; one repeat post; one relevant unknown-identity item; one syndicated secondary article; one direct and one partial competitor; a product-feature claim 31 days old; and one inaccessible source retained only as a coverage gap.
