@@ -1,6 +1,6 @@
 # Validate scoring rubric
 
-Score only from evidence in the run. Cite evidence IDs in every rationale. Each known dimension receives an integer from 0 to 5. A dimension is `unknown` when the evidence cannot distinguish its anchor; unknown contributes 0 at the total's lower endpoint and the full dimension weight at its upper endpoint. Use the diagnostic questions, maturity stages, gates and overrides in `idea-scorecard.md`; the written anchors below, not an average of checklist items, determine the dimension score.
+Score only from evidence in the run. Cite evidence IDs in every rationale. These dimension anchors provide interpretable summaries; the exact score is calculated from the 20 weighted criteria and verification factors in `verification-scorecard.md`. A dimension is `unknown` when its outcome cannot be supported. Missing evidence earns no verified points but is not evidence of a zero outcome.
 
 ## Demand — 25 points
 
@@ -50,15 +50,15 @@ Use `year_one_roi_percent = year_one_net_economic_value / (annual_running_costs 
 
 ## Calculation
 
-Weights: demand 25, unmet need 25, net savings 30, feasibility 20.
+Weights: demand 25, unmet need 25, net savings 30, feasibility 20. Use the criterion weights within those dimensions from `verification-scorecard.md`.
 
 ```text
-known dimension points = integer score * weight / 5
-lower total = sum(known points) + 0 for every unknown
-upper total = sum(known points) + full weight for every unknown
+criterion points = criterion weight * criterion rating / 5 * verification factor
+verified market score = sum(criterion points)
+evidence coverage = sum(criterion weight * verification factor)
 ```
 
-Example: demand 4 = 20, unmet need 3 = 15, net savings unknown = 0–30, feasibility 2 = 8, so total = **43–73/100**.
+Example: if every Demand criterion is rated 4 and verified, every Unmet Need criterion is rated 3 and verified, every Net Savings criterion is missing, and every Feasibility criterion is rated 2 and verified, the result is **43/100** with **70/100 evidence coverage**. The missing ROI is visible in coverage and criterion status; it does not create a speculative 30-point upper bound.
 
 ## Evidence confidence
 
@@ -74,7 +74,7 @@ State which of source independence, recency, buyer fit, and baseline quality lim
 
 The score informs but does not mechanically select the verdict.
 
-- **Pilot:** verified buyer pain, an explicit incumbent comparison, a validated operating baseline, and a plausible integration/approval route are all present. Economics must be plausibly positive after full costs. A score range crossing material uncertainty is not enough by itself.
+- **Pilot:** verified buyer pain, an explicit incumbent comparison, a validated operating baseline, and a plausible integration/approval route are all present. Economics must be plausibly positive after full costs. A high score cannot substitute for a failed gate or weak evidence coverage.
 - **Interview first:** evidence suggests meaningful pain or attractive hypothetical economics, but buyer validation, baseline, buying process, or a critical assumption is missing. Specify the single interview/measurement that can change the decision.
 - **Re-scope:** pain exists, but the buyer, workflow boundary, geography, solution shape, economics, or integration route needs narrowing or alteration. Name the proposed scope.
 - **Deprioritize:** buyer-fit evidence supports low demand, low remaining need, negative economics, or an unmitigable feasibility block. Unknown is not evidence for deprioritization.
