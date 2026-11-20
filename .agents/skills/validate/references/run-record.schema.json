@@ -4,7 +4,7 @@
   "title": "A-EYE Validate run record",
   "type": "object",
   "additionalProperties": false,
-  "required": ["run_id", "status", "validated_on", "scope", "independent_research", "counts", "evidence_lifecycle", "dimension_scores", "score", "confidence", "market_test_stage", "pilot_gates", "verdict", "top_unknown", "next_step", "evidence"],
+  "required": ["run_id", "status", "validated_on", "scope", "independent_research", "counts", "evidence_lifecycle", "dimension_scores", "roi", "score", "confidence", "market_test_stage", "pilot_gates", "verdict", "top_unknown", "next_step", "evidence"],
   "properties": {
     "run_id": {"type": "string", "pattern": "^AEYE-[0-9]{8}-[a-z0-9-]+-[a-f0-9]{8}$"},
     "status": {"enum": ["complete", "partial", "blocked"]},
@@ -65,6 +65,19 @@
         "unmet_need": {"type": ["integer", "null"], "minimum": 0, "maximum": 5},
         "net_savings": {"type": ["integer", "null"], "minimum": 0, "maximum": 5},
         "feasibility": {"type": ["integer", "null"], "minimum": 0, "maximum": 5}
+      }
+    },
+    "roi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basis", "low_percent", "base_percent", "high_percent", "base_payback_months", "cash_realization"],
+      "properties": {
+        "basis": {"enum": ["measured", "sourced", "mixed", "hypothetical", "unknown"]},
+        "low_percent": {"type": ["number", "null"]},
+        "base_percent": {"type": ["number", "null"]},
+        "high_percent": {"type": ["number", "null"]},
+        "base_payback_months": {"type": ["number", "null"], "minimum": 0},
+        "cash_realization": {"type": ["boolean", "null"]}
       }
     },
     "score": {
