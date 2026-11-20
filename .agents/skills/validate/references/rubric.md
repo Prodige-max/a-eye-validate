@@ -28,12 +28,14 @@ Score only from evidence in the run. Cite evidence IDs in every rationale. Each 
 
 | Score | Anchor |
 |---:|---|
-| 0 | Measured/sourced downside and base cases are non-positive after implementation and running costs. |
-| 1 | Positive value requires aggressive assumptions, excludes material costs, or has very poor downside. |
-| 2 | Base case is positive but downside is non-positive or key baseline/cost inputs are weak. |
-| 3 | Base case is positive after full costs, with plausible sensitivities and no obvious double count; baseline is partly validated. |
-| 4 | Base and conservative downside are positive using buyer-fit baseline data and credible full costs; payback is acceptable to the buyer. |
-| 5 | Score 4 plus buyer-validated cash realization or capacity conversion and measured pilot/analogue performance. |
+| 0 | Measured or well-sourced base and downside year-one ROI are non-positive after implementation and running costs. |
+| 1 | Positive ROI appears only in the high case, requires aggressive assumptions, excludes material costs, or has no credible realization path. |
+| 2 | Base recurring value is positive, but base year-one ROI or downside ROI is non-positive, payback misses the buyer hurdle, or decision-critical inputs are weak. |
+| 3 | Base year-one ROI is positive after full costs, payback is plausible, sensitivities are explicit, and the partly validated baseline has no obvious double count. |
+| 4 | Base and conservative downside year-one ROI are positive using buyer-fit baseline data and credible full costs; base ROI and payback clear the buyer's documented hurdle. |
+| 5 | Score 4 plus measured pilot or close-analogue performance and buyer-validated cash realization or an owned, measurable capacity-conversion plan. |
+
+Use `year_one_roi_percent = year_one_net_economic_value / (annual_running_costs + one_time_implementation_costs) * 100`. If the buyer has no documented hurdle, report that gap rather than inventing one. Capacity-led ROI is economic ROI, not cash ROI. A hypothetical or unknown ROI basis makes Net Savings `unknown`, not 0.
 
 ## Feasibility — 20 points
 
