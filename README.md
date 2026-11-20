@@ -42,6 +42,10 @@ Never commit credentials, workspace-specific Notion IDs, or real per-run researc
 
 Public research can establish a market signal, but it cannot manufacture a buyer's operating baseline. Use [interview-baseline.md](.agents/skills/validate/references/interview-baseline.md) to measure current case volumes, handling time, referral and rework rates, losses, costs, approvals, and integration constraints before a pilot verdict.
 
+## Comparable idea scoring
+
+Every idea is scored on demand (25), unmet need (25), net savings (30), and feasibility (20). Validate also records evidence confidence, a six-stage market-test maturity level, four mandatory pilot gates, red-flag overrides, and one falsifiable next experiment. Unknown dimensions produce a range rather than an invented midpoint. See [idea-scorecard.md](.agents/skills/validate/references/idea-scorecard.md).
+
 ## Checks
 
 Python 3.10 or later is sufficient; the checks use only the standard library.
