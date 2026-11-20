@@ -9,6 +9,12 @@
     "workflow": "Affordability assessment",
     "currency": "ZAR"
   },
+  "independent_research": {
+    "completed": true,
+    "fresh_search_date": "2026-11-20",
+    "groups_attempted": ["complaints/workarounds", "products/services", "cost/resource benchmarks"],
+    "limitations": "Synthetic fixture sources only; real runs require accessible external sources"
+  },
   "counts": {
     "complainants": 2,
     "affected_organizations": 2,
@@ -25,7 +31,7 @@
   "notion_page_url": null,
   "save_error": "Synthetic fixture: persistence intentionally unavailable",
   "evidence": [
-    {"id": "E01", "url": "https://fixture.invalid/evidence/1", "type": "firsthand complaint", "last_verified": "2026-11-20", "lifecycle": "new"},
-    {"id": "E02", "url": "https://fixture.invalid/evidence/2", "type": "solution", "last_verified": "2026-11-20", "lifecycle": "refreshed"}
+    {"id": "E01", "url": "https://fixture.invalid/evidence/1", "type": "firsthand complaint", "relationship": "independent", "last_verified": "2026-11-20", "lifecycle": "new"},
+    {"id": "E02", "url": "https://fixture.invalid/evidence/2", "type": "solution", "relationship": "incumbent/vendor", "last_verified": "2026-11-20", "lifecycle": "refreshed"}
   ]
 }
