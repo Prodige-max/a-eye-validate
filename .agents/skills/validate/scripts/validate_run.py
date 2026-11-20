@@ -23,6 +23,7 @@ MARKET_TEST_STAGES = {"hypothesis", "public evidence", "buyer discovery", "basel
                       "controlled pilot", "repeatability proven"}
 PILOT_GATES = {"verified_buyer_pain", "incumbent_comparison", "validated_operating_baseline",
                "plausible_integration_route"}
+ROI_BASES = {"measured", "sourced", "mixed", "hypothetical", "unknown"}
 
 
 def require(condition: bool, message: str, errors: list[str]) -> None:
@@ -40,7 +41,7 @@ def is_url(value: object) -> bool:
 def validate(record: dict) -> list[str]:
     errors: list[str] = []
     required = {"run_id", "status", "validated_on", "scope", "independent_research", "counts", "evidence_lifecycle",
-                "dimension_scores", "score", "confidence", "market_test_stage", "pilot_gates", "verdict",
+                "dimension_scores", "roi", "score", "confidence", "market_test_stage", "pilot_gates", "verdict",
                 "top_unknown", "next_step", "evidence"}
     require(required <= record.keys(), f"missing top-level fields: {sorted(required - record.keys())}", errors)
     if errors:
@@ -97,6 +98,31 @@ def validate(record: dict) -> list[str]:
             value = dimensions.get(field)
             require(value is None or (isinstance(value, int) and not isinstance(value, bool) and 0 <= value <= 5),
                     f"dimension_scores.{field} must be an integer 0..5 or null", errors)
+
+    roi = record["roi"]
+    require(isinstance(roi, dict), "roi must be an object", errors)
+    roi_fields = {"basis", "low_percent", "base_percent", "high_percent", "base_payback_months", "cash_realization"}
+    if isinstance(roi, dict):
+        require(set(roi) == roi_fields, "roi contains missing or unexpected fields", errors)
+        require(roi.get("basis") in ROI_BASES, "roi.basis is invalid", errors)
+        for field in ("low_percent", "base_percent", "high_percent"):
+            value = roi.get(field)
+            require(value is None or (isinstance(value, (int, float)) and not isinstance(value, bool)),
+                    f"roi.{field} must be a number or null", errors)
+        payback = roi.get("base_payback_months")
+        require(payback is None or (isinstance(payback, (int, float)) and not isinstance(payback, bool) and payback >= 0),
+                "roi.base_payback_months must be a non-negative number or null", errors)
+        require(roi.get("cash_realization") is None or isinstance(roi.get("cash_realization"), bool),
+                "roi.cash_realization must be boolean or null", errors)
+        if isinstance(dimensions, dict) and dimensions.get("net_savings") is not None:
+            require(roi.get("basis") not in {"hypothetical", "unknown"},
+                    "known net_savings requires measured, sourced, or mixed ROI", errors)
+            require(isinstance(roi.get("base_percent"), (int, float)) and not isinstance(roi.get("base_percent"), bool),
+                    "known net_savings requires numeric roi.base_percent", errors)
+        if isinstance(dimensions, dict) and isinstance(dimensions.get("net_savings"), int) and dimensions["net_savings"] >= 4:
+            require(isinstance(roi.get("low_percent"), (int, float)) and roi["low_percent"] > 0,
+                    "net_savings 4 or 5 requires positive downside ROI", errors)
+            require(payback is not None, "net_savings 4 or 5 requires base payback", errors)
 
     score = record["score"]
     low, high = score.get("low"), score.get("high")
