@@ -12,6 +12,11 @@ ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "fixtures" / "acceptance.json"
 SKILL = ROOT / "SKILL.md"
 REPORT_TEMPLATE = ROOT / "references" / "report-template.md"
+REQUIRED_REFERENCES = (
+    ROOT / "references" / "interview-baseline.md",
+    ROOT / "references" / "notion-setup.md",
+    ROOT / "references" / "run-record.schema.json",
+)
 
 
 def load_fixture() -> dict:
@@ -64,6 +69,10 @@ def main() -> None:
     assert skill_text.startswith("---\nname: validate\n")
     for phrase in ("market validation", "workflow gaps", "competitors", "buyer savings", "Notion evidence"):
         assert phrase in skill_text.split("---", 2)[1]
+    assert all(path.is_file() for path in REQUIRED_REFERENCES)
+    assert "## Capability preflight" in skill_text
+    assert "scripts/validate_run.py" in skill_text
+    assert "## Portable run record" in report_text
     assert observed_counts(data["evidence"]) == {
         "complainants": 2, "organizations": 2, "unknown_identity": 1, "offerings": 2, "direct_fit": 1}
     assert stale_feature_ids(data) == ["E6"]
