@@ -7,13 +7,13 @@ description: Research market validation, workflow gaps, competitors, buyer savin
 
 Produce an evidence-bounded market-validation decision, not a market-size claim. The repository contains the method; web search supplies current public evidence; the operator's authorized Notion destination holds run history.
 
-Read [references/rubric.md](references/rubric.md) and [references/idea-scorecard.md](references/idea-scorecard.md) before scoring, [references/report-template.md](references/report-template.md) before composing or saving a report, [references/interview-baseline.md](references/interview-baseline.md) before recommending buyer discovery, [references/web-collection.md](references/web-collection.md) before collecting source pages, and [references/notion-setup.md](references/notion-setup.md) before persistence.
+Read [references/rubric.md](references/rubric.md), [references/verification-scorecard.md](references/verification-scorecard.md), and [references/idea-scorecard.md](references/idea-scorecard.md) before scoring, [references/report-template.md](references/report-template.md) before composing or saving a report, [references/interview-baseline.md](references/interview-baseline.md) before recommending buyer discovery, [references/web-collection.md](references/web-collection.md) before collecting source pages, and [references/notion-setup.md](references/notion-setup.md) before persistence.
 
 ## Invocation and inputs
 
 Typical invocation: `Use Validate to research [problem] for [buyer] in [market].`
 
-Capture problem/current workflow, buyer role, industry, geography/currency, evidence date range (default: the 12 months ending today), candidate solution if supplied, and an authorized Notion parent/database if supplied. Ask only when a missing answer would materially change the buyer or market; otherwise state conservative assumptions. Older context may be used when visibly labeled as background.
+Capture problem/current workflow, buyer role, industry, geography/currency, evidence date range (default: the 12 months ending today), candidate solution if supplied, and an authorized Notion parent/database if supplied. Before every new market test, ask two or three concise calibration questions covering the highest-impact missing details: buyer/scope, current workflow and operating baseline, and candidate outcome/price/integration or pilot constraint. Do not repeat facts already supplied. If the operator cannot answer, proceed with explicit conservative assumptions and reduce the affected verification grades. Older context may be used when visibly labeled as background.
 
 Create one stable run ID before research: `AEYE-YYYYMMDD-<scope-slug>-<8-char-suffix>`. Retain it in working notes, all evidence, retries, fallbacks, and the final response. On a continuation or retry, recover the original ID rather than creating another. The suffix may be a short hash or random identifier available in the session.
 
@@ -103,11 +103,9 @@ Calculate payback only when recurring net value is positive and ROI only when to
 
 ### 7. Score and apply the interview gate
 
-Use the written anchors and verdict rules in `references/rubric.md` plus the evidence checklist, maturity stages, pilot gates and overrides in `references/idea-scorecard.md`. Score each known dimension from 0 to 5 and calculate `dimension points = score * weight / 5`. Use zero only when evidence supports zero.
+Use the dimension anchors in `references/rubric.md` and score all 20 weighted criteria in `references/verification-scorecard.md`. Give each criterion a performance rating from 0 to 5 or `unknown` and a verification grade. Calculate `criterion points = weight * rating / 5 * verification factor`; missing evidence earns zero verified points and remains labelled unknown. Never use a zero rating merely because evidence is missing. The result is one exact **Verified Market Score** out of 100 plus a separate **Evidence Coverage** percentage. Do not publish a speculative upper bound or midpoint.
 
-For an unknown dimension, show a range: zero contribution at the lower endpoint and its full weight at the upper endpoint. Do not hide uncertainty behind a midpoint. Rate confidence separately from the score.
-
-Record all four dimension scores explicitly, low/base/high year-one ROI and its evidence basis, the market-test maturity stage, each pilot gate, any red-flag override, and the bounded next experiment. Net Savings is the ROI-bearing dimension: apply its written anchors to full-cost ROI, payback, realization, and baseline quality without adding a separate ROI bonus or double-counting economics. For portfolio comparisons, use the lower score bound, confidence, maturity, failed gates and experiment cost; never rank an unknown range by its midpoint.
+Record all criterion ratings, verification grades, evidence IDs and rationales; the four dimension summaries; low/base/high year-one ROI and its evidence basis; the market-test maturity stage; each pilot gate; any red-flag override; and the bounded next experiment. Net Savings is the ROI-bearing dimension: evaluate full-cost ROI, downside, payback, realization and baseline quality without adding a separate ROI bonus or double-counting economics. Rank comparable ideas by verified score, then evidence coverage, gates, downside ROI, maturity, and next-test cost/time as specified in the verification scorecard.
 
 A **pilot** requires all four gates: verified buyer pain, comparison with incumbents, a validated operating baseline, and a plausible integration/approval route. Without all four, the verdict cannot be pilot. Hypothetical positive economics may justify **interview first**, not pilot. When interviews are needed, prescribe a bounded round using the questions and measurement worksheet in `references/interview-baseline.md`.
 
@@ -132,7 +130,7 @@ Maintain a portable structured run record matching `references/run-record.schema
 
 ## Final response contract
 
-Always include: run ID; run status; an explicit independent-research status; supplied claims corroborated, contradicted, and unverified; observed demand counts or `unknown`; verified offerings and direct-fit count or `unknown`; evidence reuse/refreshed/new counts; score or range; confidence; verdict; top unknown; one next step; and the verified Notion page link or explicit save error plus complete Markdown fallback.
+Always include: run ID; run status; an explicit independent-research status; supplied claims corroborated, contradicted, and unverified; observed demand counts or `unknown`; verified offerings and direct-fit count or `unknown`; evidence reuse/refreshed/new counts; exact verified score; evidence coverage; confidence; verdict; top unknown; one next step; and the verified Notion page link or explicit save error plus complete Markdown fallback.
 
 ## Upstream reference
 
