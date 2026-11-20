@@ -44,7 +44,7 @@ Public research can establish a market signal, but it cannot manufacture a buyer
 
 ## Comparable idea scoring
 
-Every idea is scored on demand (25), unmet need (25), net savings (30), and feasibility (20). Validate also records evidence confidence, a six-stage market-test maturity level, four mandatory pilot gates, red-flag overrides, and one falsifiable next experiment. Unknown dimensions produce a range rather than an invented midpoint. See [idea-scorecard.md](.agents/skills/validate/references/idea-scorecard.md).
+Every idea is scored on demand (25), unmet need (25), net savings including full-cost ROI (30), and feasibility (20). ROI is evaluated through low/base/high year-one economics, payback, realization and evidence quality; it is not an extra bonus that double-counts savings. Validate also records evidence confidence, a six-stage market-test maturity level, four mandatory pilot gates, red-flag overrides, and one falsifiable next experiment. Unknown dimensions produce a range rather than an invented midpoint. See [idea-scorecard.md](.agents/skills/validate/references/idea-scorecard.md).
 
 ## Checks
 
