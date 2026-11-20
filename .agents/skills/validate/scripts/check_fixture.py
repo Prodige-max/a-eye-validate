@@ -58,8 +58,11 @@ def roi(inputs: dict) -> dict[str, float]:
     recurring = capacity + inputs["independently_verified_annual_savings_zar"] - inputs["annual_running_cost_zar"]
     year_one = recurring - inputs["one_time_implementation_cost_zar"]
     payback = inputs["one_time_implementation_cost_zar"] / (recurring / 12) if recurring > 0 else None
+    year_one_cost = inputs["annual_running_cost_zar"] + inputs["one_time_implementation_cost_zar"]
+    year_one_roi_percent = year_one / year_one_cost * 100 if year_one_cost > 0 else None
     return {"annual_hours": hours, "capacity_zar": capacity, "recurring_zar": recurring,
-            "year_one_zar": year_one, "payback_months": payback}
+            "year_one_zar": year_one, "payback_months": payback,
+            "year_one_roi_percent": year_one_roi_percent}
 
 
 def score_range(scores: dict) -> tuple[float, float]:
@@ -91,9 +94,11 @@ def main() -> None:
         "complainants": 2, "organizations": 2, "unknown_identity": 1, "offerings": 2, "direct_fit": 1}
     assert stale_feature_ids(data) == ["E6"]
     assert any(not row.get("accessible") for row in data["evidence"]), "coverage note fixture missing"
-    assert roi(data["roi"]) == {"annual_hours": 600.0, "capacity_zar": 180000.0,
-                                 "recurring_zar": 120000.0, "year_one_zar": 40000.0,
-                                 "payback_months": 8.0}
+    roi_result = roi(data["roi"])
+    assert roi_result | {"year_one_roi_percent": 0} == {
+        "annual_hours": 600.0, "capacity_zar": 180000.0, "recurring_zar": 120000.0,
+        "year_one_zar": 40000.0, "payback_months": 8.0, "year_one_roi_percent": 0}
+    assert abs(roi_result["year_one_roi_percent"] - 28.5714285714) < 1e-9
     assert score_range(data["scores"]) == (43.0, 73.0)
     run_record = json.loads(VALID_RUN.read_text(encoding="utf-8"))
     assert validate_run_record(run_record) == []
@@ -103,6 +108,11 @@ def main() -> None:
     premature_pilot = deepcopy(run_record)
     premature_pilot["verdict"] = "pilot"
     assert any("all four pilot gates" in error for error in validate_run_record(premature_pilot))
+    hypothetical_roi = deepcopy(run_record)
+    hypothetical_roi["dimension_scores"]["net_savings"] = 3
+    hypothetical_roi["score"] = {"low": 61, "high": 61}
+    assert any("known net_savings requires measured, sourced, or mixed ROI" in error
+               for error in validate_run_record(hypothetical_roi))
     degraded = data["degraded"]
     assert degraded["web_search_available"] is False and degraded["unsupported_counts"] == "unknown"
     assert degraded["notion_write_available"] is False and degraded["fallback_complete"] is True
@@ -115,9 +125,9 @@ def main() -> None:
     assert retry["existing_page_found"] is True and retry["action"] == "update"
     print("PASS skill fixture: demand/supply deduplication and coverage")
     print("PASS freshness: E6 refresh required; E7 current")
-    print("PASS ROI: 600 h; R180,000 capacity; R120,000 recurring; R40,000 year one; 8 months")
+    print("PASS ROI: 600 h; R180,000 capacity; R40,000 year one; 28.57%; 8 months")
     print("PASS score: 43-73/100")
-    print("PASS score enforcement: arithmetic and pilot gates")
+    print("PASS score enforcement: arithmetic, ROI evidence and pilot gates")
     print("PASS degraded modes: unknown counts, Markdown fallback, idempotent retry")
 
 
