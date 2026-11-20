@@ -16,6 +16,8 @@ REQUIRED_REFERENCES = (
     ROOT / "references" / "interview-baseline.md",
     ROOT / "references" / "notion-setup.md",
     ROOT / "references" / "run-record.schema.json",
+    ROOT / "references" / "web-collection.md",
+    ROOT / "references" / "web-record.schema.json",
 )
 
 
