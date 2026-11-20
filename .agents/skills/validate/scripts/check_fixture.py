@@ -85,6 +85,8 @@ def main() -> None:
     assert "## Capability preflight" in skill_text
     assert "## Independent research requirement" in skill_text
     assert "Every Validate run must perform fresh independent external research" in skill_text
+    assert "as many as 40 total queries and 100 inspected URLs" in skill_text
+    assert "annual reports, audit findings and tenders" in skill_text
     assert "Independent external research not completed" in skill_text
     assert "scripts/validate_run.py" in skill_text
     assert "references/idea-scorecard.md" in skill_text
