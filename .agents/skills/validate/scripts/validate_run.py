@@ -15,6 +15,9 @@ RUN_ID = re.compile(r"^AEYE-[0-9]{8}-[a-z0-9-]+-[a-f0-9]{8}$")
 COUNT_FIELDS = ("complainants", "affected_organizations", "unknown_identity_items", "offerings", "direct_fit")
 VERDICTS = {"pilot", "interview first", "re-scope", "deprioritize"}
 EVIDENCE_TYPES = {"firsthand complaint", "workaround", "buying signal", "solution", "benchmark", "secondary commentary"}
+SOURCE_RELATIONSHIPS = {"independent", "incumbent/vendor", "operator-supplied", "unknown"}
+RESEARCH_GROUPS = {"complaints/workarounds", "products/services", "cost/resource benchmarks",
+                   "technical/operational verification"}
 
 
 def require(condition: bool, message: str, errors: list[str]) -> None:
@@ -31,7 +34,7 @@ def is_url(value: object) -> bool:
 
 def validate(record: dict) -> list[str]:
     errors: list[str] = []
-    required = {"run_id", "status", "validated_on", "scope", "counts", "evidence_lifecycle",
+    required = {"run_id", "status", "validated_on", "scope", "independent_research", "counts", "evidence_lifecycle",
                 "score", "confidence", "verdict", "top_unknown", "next_step", "evidence"}
     require(required <= record.keys(), f"missing top-level fields: {sorted(required - record.keys())}", errors)
     if errors:
@@ -47,6 +50,20 @@ def validate(record: dict) -> list[str]:
     scope = record["scope"]
     for field in ("industry", "geography", "buyer", "workflow", "currency"):
         require(isinstance(scope.get(field), str) and bool(scope[field].strip()), f"scope.{field} is required", errors)
+
+    research = record["independent_research"]
+    require(isinstance(research.get("completed"), bool), "independent_research.completed must be boolean", errors)
+    groups = research.get("groups_attempted")
+    require(isinstance(groups, list) and bool(groups), "independent_research.groups_attempted is required", errors)
+    if isinstance(groups, list):
+        require(set(groups) <= RESEARCH_GROUPS, "independent_research.groups_attempted contains an invalid group", errors)
+    try:
+        date.fromisoformat(research.get("fresh_search_date", ""))
+    except (TypeError, ValueError):
+        errors.append("independent_research.fresh_search_date must be an ISO date")
+    if record["status"] == "complete":
+        require(research.get("completed") is True,
+                "complete runs require completed independent external research", errors)
 
     counts = record["counts"]
     for field in COUNT_FIELDS:
@@ -86,6 +103,7 @@ def validate(record: dict) -> list[str]:
         evidence_ids.add(evidence_id)
         require(is_url(item.get("url")), f"{prefix}.url must be http(s)", errors)
         require(item.get("type") in EVIDENCE_TYPES, f"{prefix}.type is invalid", errors)
+        require(item.get("relationship") in SOURCE_RELATIONSHIPS, f"{prefix}.relationship is invalid", errors)
         require(item.get("lifecycle") in {"reused", "refreshed", "new"}, f"{prefix}.lifecycle is invalid", errors)
         try:
             date.fromisoformat(item.get("last_verified", ""))
