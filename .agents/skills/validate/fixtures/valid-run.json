@@ -23,8 +23,21 @@
     "direct_fit": 1
   },
   "evidence_lifecycle": {"reused": 0, "refreshed": 1, "new": 7},
+  "dimension_scores": {
+    "demand": 4,
+    "unmet_need": 3,
+    "net_savings": null,
+    "feasibility": 2
+  },
   "score": {"low": 43, "high": 73},
   "confidence": "medium",
+  "market_test_stage": "public evidence",
+  "pilot_gates": {
+    "verified_buyer_pain": true,
+    "incumbent_comparison": true,
+    "validated_operating_baseline": false,
+    "plausible_integration_route": false
+  },
   "verdict": "interview first",
   "top_unknown": "Measured exception handling time",
   "next_step": "Measure 30 representative cases",
