@@ -44,7 +44,7 @@ Public research can establish a market signal, but it cannot manufacture a buyer
 
 ## Comparable idea scoring
 
-Every idea is scored on demand (25), unmet need (25), net savings including full-cost ROI (30), and feasibility (20). ROI is evaluated through low/base/high year-one economics, payback, realization and evidence quality; it is not an extra bonus that double-counts savings. Validate also records evidence confidence, a six-stage market-test maturity level, four mandatory pilot gates, red-flag overrides, and one falsifiable next experiment. Unknown dimensions produce a range rather than an invented midpoint. See [idea-scorecard.md](.agents/skills/validate/references/idea-scorecard.md).
+Every idea receives one exact Verified Market Score out of 100 across 20 criteria: demand (25), unmet need (25), net savings including full-cost ROI (30), and feasibility (20). Each criterion is discounted by a verification factor, while a separate Evidence Coverage score shows how much of the decision is actually supported. Missing evidence earns no verified points but remains labelled unknown rather than becoming a false zero or a wide speculative range. Validate also records confidence, a six-stage maturity level, four mandatory pilot gates, red-flag overrides, and one falsifiable next experiment. Before each new market test it asks two or three calibration questions about the buyer, current baseline, and candidate solution. See [verification-scorecard.md](.agents/skills/validate/references/verification-scorecard.md).
 
 ## Checks
 
@@ -56,7 +56,7 @@ python3 .agents/skills/validate/scripts/check_collector.py
 python3 .agents/skills/validate/scripts/validate_run.py .agents/skills/validate/fixtures/valid-run.json
 ```
 
-The deterministic fixtures verify deduplication, supply classification, freshness, ROI arithmetic, score ranges, degraded modes, idempotent retry behavior, HTML normalization, and collector network boundaries. `validate_run.py` checks portable run records before persistence.
+The deterministic fixtures verify deduplication, supply classification, freshness, ROI arithmetic, criterion scoring, evidence coverage, degraded modes, idempotent retry behavior, HTML normalization, and collector network boundaries. `validate_run.py` checks portable run records before persistence.
 
 ## Deployment checklist
 
