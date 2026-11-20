@@ -12,6 +12,7 @@ Use Markdown that pastes cleanly into Notion. Do not omit sections; use `unknown
 **Evidence window:** <start> to <end>; older background labeled  
 **Candidate solution:** <supplied description or not supplied>  
 **Currency:** <currency>
+**Independent research:** completed | partial — <fresh searches and limiting capability>
 
 ## Decision summary
 
@@ -27,6 +28,12 @@ Use Markdown that pastes cleanly into Notion. Do not omit sections; use `unknown
 ## Scope and assumptions
 
 <definitions, inclusions, exclusions, assumptions, and default date-window disclosure>
+
+## Supplied-claim verification
+
+| Supplied claim | Supplied source | Independent source IDs | Result | Notes |
+|---|---|---|---|---|
+| ... | ... | ... | corroborated/contradicted/unverified | ... |
 
 ## Prior evidence and freshness
 
@@ -93,9 +100,9 @@ Buyer data needed: <measurements needed to validate assumptions>.
 
 ## Source-level evidence
 
-| Evidence ID | Canonical URL | Title | Published | Last verified | Source type | Evidence type | Claim/excerpt | Observable author | Observable organization | Industry | Buyer | Geography | Workflow | Run ID | Lifecycle |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| ... | ... | ... | unknown if unavailable | ... | ... | firsthand complaint/workaround/solution/benchmark/secondary commentary | concise paraphrase | unknown if unavailable | unknown if unavailable | ... | ... | ... | ... | ... | reused/refreshed/new |
+| Evidence ID | Canonical URL | Title | Published | Last verified | Source type | Relationship | Evidence type | Claim/excerpt | Observable author | Observable organization | Industry | Buyer | Geography | Workflow | Run ID | Lifecycle |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| ... | ... | ... | unknown if unavailable | ... | ... | independent/incumbent-vendor/operator-supplied/unknown | firsthand complaint/workaround/solution/benchmark/secondary commentary | concise paraphrase | unknown if unavailable | unknown if unavailable | ... | ... | ... | ... | ... | reused/refreshed/new |
 
 ## Persistence
 
