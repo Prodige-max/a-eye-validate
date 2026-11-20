@@ -1,6 +1,6 @@
 # Validate scoring rubric
 
-Score only from evidence in the run. Cite evidence IDs in every rationale. Each known dimension receives an integer from 0 to 5. A dimension is `unknown` when the evidence cannot distinguish its anchor; unknown contributes 0 at the total's lower endpoint and the full dimension weight at its upper endpoint.
+Score only from evidence in the run. Cite evidence IDs in every rationale. Each known dimension receives an integer from 0 to 5. A dimension is `unknown` when the evidence cannot distinguish its anchor; unknown contributes 0 at the total's lower endpoint and the full dimension weight at its upper endpoint. Use the diagnostic questions, maturity stages, gates and overrides in `idea-scorecard.md`; the written anchors below, not an average of checklist items, determine the dimension score.
 
 ## Demand — 25 points
 
