@@ -1,0 +1,21 @@
+name: Validate skill checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fixture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check deterministic fixture
+        run: python3 .agents/skills/validate/scripts/check_fixture.py
+      - name: Check portable run record
+        run: python3 .agents/skills/validate/scripts/validate_run.py .agents/skills/validate/fixtures/valid-run.json
