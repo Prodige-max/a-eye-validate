@@ -29,6 +29,20 @@ Create one stable run ID before research: `AEYE-YYYYMMDD-<scope-slug>-<8-char-su
 
 Before research, record whether web search, Notion read, and Notion write are available. Resolve the authorized Notion destination without hard-coding its workspace ID. If a capability is missing, use the matching degraded mode and continue where the evidence permits.
 
+## Independent research requirement
+
+Every Validate run must perform fresh independent external research, including runs that begin with a supplied brief, PDF, repository, business plan, interview transcript, or prior Notion report. Treat supplied material as a claim source and scope input, not as independent confirmation.
+
+- Run current web searches across all decision-critical evidence groups. Reusing prior evidence does not replace fresh verification.
+- For each material conclusion, seek evidence outside the proposed solution's authors, vendors, investors, affiliates, and supplied documents.
+- At minimum, attempt to obtain (1) buyer or practitioner evidence, (2) official incumbent or provider documentation for capability claims, and (3) an independent benchmark, regulator, industry body, buyer document, or other non-vendor source for market or cost claims.
+- A vendor may verify its own documented features or pricing, but cannot independently prove demand, remaining pain, achieved savings, product superiority, or enterprise readiness.
+- Cross-check supplied technical claims against accessible implementation evidence, official platform documentation, independent operational evidence, and representative tests where available.
+- Record the relationship of every accepted source to the proposed solution: `independent`, `incumbent/vendor`, `operator-supplied`, or `unknown`.
+- Explicitly report which supplied claims were corroborated, contradicted, or remain unverified.
+
+If web search is unavailable, the run is `partial`. It may provide a clearly labeled document or source assessment, but it must not present a definitive market-gap, competitor, demand, savings, or enterprise-readiness conclusion. State: `Independent external research not completed` and identify the exact capability needed.
+
 ## Workflow
 
 ### 1. Scope and plan
@@ -44,6 +58,8 @@ Refresh product features and pricing after 30 days and other evidence after 90 d
 ### 3. Search three evidence groups
 
 Search separately for (1) firsthand complaints, consequences, and workarounds; (2) competing products, incumbent systems, services, and substitutes; and (3) time, labor, cost, error, and resource benchmarks.
+
+This search is mandatory even when the operator supplies a detailed report or when fresh Notion evidence exists. Refresh at least one decision-critical external source in each applicable group and record unsuccessful searches when suitable independent evidence cannot be found.
 
 Start with no more than 12 queries and inspect no more than 40 URLs across the three groups. Expand only when a named coverage gap is decision-critical. Log every query actually run, its group and date window; log inspected, inaccessible, rejected, and accepted sources.
 
@@ -113,7 +129,7 @@ Maintain a portable structured run record matching `references/run-record.schema
 
 ## Final response contract
 
-Always include: run ID; run status; observed demand counts or `unknown`; verified offerings and direct-fit count or `unknown`; evidence reuse/refreshed/new counts; score or range; confidence; verdict; top unknown; one next step; and the verified Notion page link or explicit save error plus complete Markdown fallback.
+Always include: run ID; run status; an explicit independent-research status; supplied claims corroborated, contradicted, and unverified; observed demand counts or `unknown`; verified offerings and direct-fit count or `unknown`; evidence reuse/refreshed/new counts; score or range; confidence; verdict; top unknown; one next step; and the verified Notion page link or explicit save error plus complete Markdown fallback.
 
 ## Upstream reference
 
