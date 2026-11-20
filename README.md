@@ -24,6 +24,8 @@ If web search is unavailable, the result is explicitly partial and cannot be pre
 
 Validate includes a robots-aware collector that converts approved public seed pages and bounded same-host links into auditable JSONL. Hosted search remains responsible for broad discovery; the collector does not bypass access controls or turn page counts into market evidence automatically.
 
+Validate uses staged targeted discovery: up to 12 initial queries and 40 inspected URLs, expanding to 40 queries and 100 inspected URLs when evidence coverage is below 70% or a decision-critical gap remains. Query families cover buyer complaints, annual reports, audits, tenders, job posts, benchmarks, competitor documentation, pricing, integrations, reviews and residual pain after incumbent adoption.
+
 ```bash
 python3 .agents/skills/validate/scripts/collect_web.py \
   --seed-file /tmp/validate-seeds.txt \
