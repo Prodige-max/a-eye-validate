@@ -7,7 +7,7 @@ description: Research market validation, workflow gaps, competitors, buyer savin
 
 Produce an evidence-bounded market-validation decision, not a market-size claim. The repository contains the method; web search supplies current public evidence; the operator's authorized Notion destination holds run history.
 
-Read [references/rubric.md](references/rubric.md) before scoring, [references/report-template.md](references/report-template.md) before composing or saving a report, [references/interview-baseline.md](references/interview-baseline.md) before recommending buyer discovery, [references/web-collection.md](references/web-collection.md) before collecting source pages, and [references/notion-setup.md](references/notion-setup.md) before persistence.
+Read [references/rubric.md](references/rubric.md) and [references/idea-scorecard.md](references/idea-scorecard.md) before scoring, [references/report-template.md](references/report-template.md) before composing or saving a report, [references/interview-baseline.md](references/interview-baseline.md) before recommending buyer discovery, [references/web-collection.md](references/web-collection.md) before collecting source pages, and [references/notion-setup.md](references/notion-setup.md) before persistence.
 
 ## Invocation and inputs
 
@@ -102,9 +102,11 @@ Calculate payback only when recurring net value is positive. `net_minutes_saved`
 
 ### 7. Score and apply the interview gate
 
-Use the written anchors and verdict rules in `references/rubric.md`. Score each known dimension from 0 to 5 and calculate `dimension points = score * weight / 5`. Use zero only when evidence supports zero.
+Use the written anchors and verdict rules in `references/rubric.md` plus the evidence checklist, maturity stages, pilot gates and overrides in `references/idea-scorecard.md`. Score each known dimension from 0 to 5 and calculate `dimension points = score * weight / 5`. Use zero only when evidence supports zero.
 
 For an unknown dimension, show a range: zero contribution at the lower endpoint and its full weight at the upper endpoint. Do not hide uncertainty behind a midpoint. Rate confidence separately from the score.
+
+Record all four dimension scores explicitly, the market-test maturity stage, each pilot gate, any red-flag override, and the bounded next experiment. For portfolio comparisons, use the lower score bound, confidence, maturity, failed gates and experiment cost; never rank an unknown range by its midpoint.
 
 A **pilot** requires all four gates: verified buyer pain, comparison with incumbents, a validated operating baseline, and a plausible integration/approval route. Without all four, the verdict cannot be pilot. Hypothetical positive economics may justify **interview first**, not pilot. When interviews are needed, prescribe a bounded round using the questions and measurement worksheet in `references/interview-baseline.md`.
 
