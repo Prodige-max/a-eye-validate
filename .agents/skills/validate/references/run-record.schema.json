@@ -4,7 +4,7 @@
   "title": "A-EYE Validate run record",
   "type": "object",
   "additionalProperties": false,
-  "required": ["run_id", "status", "validated_on", "scope", "independent_research", "counts", "evidence_lifecycle", "dimension_scores", "roi", "score", "confidence", "market_test_stage", "pilot_gates", "verdict", "top_unknown", "next_step", "evidence"],
+  "required": ["run_id", "status", "validated_on", "scope", "independent_research", "counts", "evidence_lifecycle", "dimension_scores", "criterion_scores", "evidence_coverage_percent", "roi", "score", "confidence", "market_test_stage", "pilot_gates", "verdict", "top_unknown", "next_step", "evidence"],
   "properties": {
     "run_id": {"type": "string", "pattern": "^AEYE-[0-9]{8}-[a-z0-9-]+-[a-f0-9]{8}$"},
     "status": {"enum": ["complete", "partial", "blocked"]},
@@ -67,6 +67,24 @@
         "feasibility": {"type": ["integer", "null"], "minimum": 0, "maximum": 5}
       }
     },
+    "criterion_scores": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "weight", "rating", "verification", "points"],
+        "properties": {
+          "id": {"enum": ["buyer_pain", "frequency_severity", "workaround_cost", "buying_signal", "incumbent_gap", "substitute_adequacy", "differentiation", "switching_access", "baseline_quality", "base_roi", "downside_roi", "payback", "value_realization", "full_cost_sensitivity", "data_access", "integration", "accuracy_review", "security_compliance", "workflow_adoption", "delivery_support"]},
+          "weight": {"type": "number", "minimum": 2, "maximum": 8},
+          "rating": {"type": ["integer", "null"], "minimum": 0, "maximum": 5},
+          "verification": {"enum": ["verified", "strong", "moderate", "weak", "assumed", "missing"]},
+          "points": {"type": "number", "minimum": 0, "maximum": 8}
+        }
+      }
+    },
+    "evidence_coverage_percent": {"type": "number", "minimum": 0, "maximum": 100},
     "roi": {
       "type": "object",
       "additionalProperties": false,
@@ -82,10 +100,10 @@
     },
     "score": {
       "type": "object",
-      "required": ["low", "high"],
+      "additionalProperties": false,
+      "required": ["value"],
       "properties": {
-        "low": {"type": "number", "minimum": 0, "maximum": 100},
-        "high": {"type": "number", "minimum": 0, "maximum": 100}
+        "value": {"type": "number", "minimum": 0, "maximum": 100}
       }
     },
     "confidence": {"enum": ["low", "medium", "high"]},
