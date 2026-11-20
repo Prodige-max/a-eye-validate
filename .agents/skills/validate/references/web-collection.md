@@ -14,7 +14,7 @@ Use this subworkflow to broaden source coverage after hosted search has produced
 
 ## Discovery and collection sequence
 
-1. Run the three Validate search groups and save the canonical candidate URLs.
+1. Run the three Validate search groups using staged discovery: up to 12 initial queries/40 inspected URLs, then up to 40 total queries/100 inspected URLs when coverage is below 70% or a decision-critical gap remains. Save the canonical candidate URLs.
 2. Remove irrelevant, credentialed, sensitive, or out-of-scope URLs.
 3. Run the collector on the approved seed list. Allow same-host links only when they are likely to close a named coverage gap.
 4. Review the JSONL records. Accept evidence only after checking buyer fit, source type, claim context, publication date, and canonical URL.
@@ -41,5 +41,7 @@ Successful HTML records contain the requested URL, final and canonical URLs, fet
 ## Coverage, scale, and outreach
 
 Broader coverage should come from more diverse search queries and domains, not unbounded depth. Raise caps only for a named gap, keep the hard maximum of 200 pages per invocation, and record the reason in the run search log.
+
+Use targeted query families for geography, buyer role, company size, industry, incumbent platform and evidence class. Useful public evidence classes include annual reports, audit findings, tenders, procurement documents, job descriptions, implementation case studies, product release notes, support forums, reviews, pricing pages and regulator or industry-body PDFs. Do not describe a run as comprehensive unless the report lists the classes attempted, accepted and still missing.
 
 “Outreach” in this workflow means reaching a broader public source sample. Any direct human outreach requires a separately approved contact list, message, channel, and sending action; the collector does not perform it.
