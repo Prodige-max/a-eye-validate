@@ -18,6 +18,11 @@ EVIDENCE_TYPES = {"firsthand complaint", "workaround", "buying signal", "solutio
 SOURCE_RELATIONSHIPS = {"independent", "incumbent/vendor", "operator-supplied", "unknown"}
 RESEARCH_GROUPS = {"complaints/workarounds", "products/services", "cost/resource benchmarks",
                    "technical/operational verification"}
+DIMENSION_WEIGHTS = {"demand": 25, "unmet_need": 25, "net_savings": 30, "feasibility": 20}
+MARKET_TEST_STAGES = {"hypothesis", "public evidence", "buyer discovery", "baseline validated",
+                      "controlled pilot", "repeatability proven"}
+PILOT_GATES = {"verified_buyer_pain", "incumbent_comparison", "validated_operating_baseline",
+               "plausible_integration_route"}
 
 
 def require(condition: bool, message: str, errors: list[str]) -> None:
@@ -35,7 +40,8 @@ def is_url(value: object) -> bool:
 def validate(record: dict) -> list[str]:
     errors: list[str] = []
     required = {"run_id", "status", "validated_on", "scope", "independent_research", "counts", "evidence_lifecycle",
-                "score", "confidence", "verdict", "top_unknown", "next_step", "evidence"}
+                "dimension_scores", "score", "confidence", "market_test_stage", "pilot_gates", "verdict",
+                "top_unknown", "next_step", "evidence"}
     require(required <= record.keys(), f"missing top-level fields: {sorted(required - record.keys())}", errors)
     if errors:
         return errors
@@ -82,15 +88,52 @@ def validate(record: dict) -> list[str]:
         require(isinstance(value, int) and not isinstance(value, bool) and value >= 0,
                 f"evidence_lifecycle.{field} must be a non-negative integer", errors)
 
+    dimensions = record["dimension_scores"]
+    require(isinstance(dimensions, dict), "dimension_scores must be an object", errors)
+    if isinstance(dimensions, dict):
+        require(set(dimensions) == set(DIMENSION_WEIGHTS),
+                "dimension_scores must contain exactly demand, unmet_need, net_savings and feasibility", errors)
+        for field in DIMENSION_WEIGHTS:
+            value = dimensions.get(field)
+            require(value is None or (isinstance(value, int) and not isinstance(value, bool) and 0 <= value <= 5),
+                    f"dimension_scores.{field} must be an integer 0..5 or null", errors)
+
     score = record["score"]
     low, high = score.get("low"), score.get("high")
     require(isinstance(low, (int, float)) and not isinstance(low, bool) and 0 <= low <= 100, "score.low must be 0..100", errors)
     require(isinstance(high, (int, float)) and not isinstance(high, bool) and 0 <= high <= 100, "score.high must be 0..100", errors)
     if isinstance(low, (int, float)) and isinstance(high, (int, float)):
         require(low <= high, "score.low cannot exceed score.high", errors)
+    if isinstance(dimensions, dict) and set(dimensions) == set(DIMENSION_WEIGHTS):
+        values_are_valid = all(
+            value is None or (isinstance(value, int) and not isinstance(value, bool) and 0 <= value <= 5)
+            for value in dimensions.values()
+        )
+        if values_are_valid:
+            expected_low = sum(
+                dimensions[field] * weight / 5
+                for field, weight in DIMENSION_WEIGHTS.items()
+                if dimensions[field] is not None
+            )
+            expected_high = expected_low + sum(
+                weight for field, weight in DIMENSION_WEIGHTS.items() if dimensions[field] is None
+            )
+            require(low == expected_low, f"score.low must equal calculated lower bound {expected_low:g}/100", errors)
+            require(high == expected_high, f"score.high must equal calculated upper bound {expected_high:g}/100", errors)
 
     require(record["confidence"] in {"low", "medium", "high"}, "invalid confidence", errors)
+    require(record["market_test_stage"] in MARKET_TEST_STAGES, "invalid market_test_stage", errors)
+    gates = record["pilot_gates"]
+    require(isinstance(gates, dict), "pilot_gates must be an object", errors)
+    if isinstance(gates, dict):
+        require(set(gates) == PILOT_GATES, "pilot_gates contains missing or unexpected gates", errors)
+        for gate in PILOT_GATES:
+            require(isinstance(gates.get(gate), bool), f"pilot_gates.{gate} must be boolean", errors)
     require(record["verdict"] in VERDICTS, "invalid verdict", errors)
+    if record["verdict"] == "pilot":
+        require(isinstance(gates, dict) and set(gates) == PILOT_GATES and all(gates.values()),
+                "pilot verdict requires all four pilot gates", errors)
+        require(record["confidence"] != "low", "pilot verdict requires medium or high confidence", errors)
     require(bool(str(record["top_unknown"]).strip()), "top_unknown is required", errors)
     require(bool(str(record["next_step"]).strip()), "next_step is required", errors)
 
