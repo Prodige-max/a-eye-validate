@@ -1,0 +1,41 @@
+{
+  "run": {
+    "id": "AEYE-20261120-fixture-a1b2c3d4",
+    "as_of": "2026-11-20",
+    "feature_refresh_days": 30,
+    "other_refresh_days": 90
+  },
+  "evidence": [
+    {"id":"E1","url":"https://fixture.invalid/forum/alice-1","type":"firsthand complaint","author":"Alice Example","organization":"Alpha Manufacturing","issue":"unmatched-deposits","accessible":true},
+    {"id":"E2","url":"https://fixture.invalid/forum/bob-1","type":"firsthand complaint","author":"Bob Example","organization":"Beta Retail","issue":"unmatched-deposits","accessible":true},
+    {"id":"E3","url":"https://fixture.invalid/forum/alice-repeat","type":"firsthand complaint","author":"Alice Example","organization":"Alpha Manufacturing","issue":"unmatched-deposits","duplicate_of":"E1","accessible":true},
+    {"id":"E4","url":"https://fixture.invalid/community/anonymous","type":"firsthand complaint","author":null,"organization":null,"issue":"unmatched-deposits","accessible":true},
+    {"id":"E5","url":"https://fixture.invalid/news/syndicated","type":"secondary commentary","author":"Reporter Example","organization":"Fixture News","issue":"unmatched-deposits","syndicated":true,"accessible":true},
+    {"id":"E6","url":"https://fixture.invalid/products/direct","type":"solution","offering":"Direct Recon","fit":"direct","claim_kind":"product feature","last_verified":"2026-10-20","accessible":true},
+    {"id":"E7","url":"https://fixture.invalid/products/partial","type":"solution","offering":"Partial Ledger","fit":"partial","claim_kind":"product feature","last_verified":"2026-11-10","accessible":true},
+    {"id":"E8","url":"https://fixture.invalid/inaccessible","type":"benchmark","accessible":false,"failure":"simulated access failure"}
+  ],
+  "roi": {
+    "monthly_case_volume": 10000,
+    "eligible_share": 0.2,
+    "adoption_share": 0.5,
+    "net_minutes_saved": 3,
+    "loaded_hourly_cost_zar": 300,
+    "independently_verified_annual_savings_zar": 0,
+    "annual_running_cost_zar": 60000,
+    "one_time_implementation_cost_zar": 80000
+  },
+  "scores": {"demand":4,"unmet_need":3,"net_savings":null,"feasibility":2},
+  "degraded": {
+    "web_search_available": false,
+    "unsupported_counts": "unknown",
+    "notion_write_available": false,
+    "fallback_complete": true,
+    "save_retry": {
+      "original_run_id": "AEYE-20261120-fixture-a1b2c3d4",
+      "retry_run_id": "AEYE-20261120-fixture-a1b2c3d4",
+      "existing_page_found": true,
+      "action": "update"
+    }
+  }
+}
