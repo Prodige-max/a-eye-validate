@@ -1,14 +1,14 @@
 # Market-tested idea scorecard
 
-Use this scorecard for every idea so results stay comparable across markets and dates. The score measures evidence, not enthusiasm. Keep the score range, confidence, market-test stage, pilot gates, and next experiment separate; no single number replaces judgment.
+Use this scorecard for every idea so results stay comparable across markets and dates. The score measures verified opportunity, not enthusiasm. Keep the exact score, evidence coverage, confidence, market-test stage, pilot gates, and next experiment separate; no single number replaces judgment.
 
 ## Scorecard output
 
 Every idea receives:
 
 1. A stable run ID and normalized scope.
-2. Four dimension scores from 0 to 5 or `unknown`.
-3. A weighted total or range out of 100.
+2. Twenty criterion ratings from 0 to 5 or `unknown`, each with a verification grade and evidence IDs.
+3. One Verified Market Score out of 100 and a separate Evidence Coverage percentage.
 4. Evidence confidence: low, medium, or high.
 5. A market-test maturity stage.
 6. Four pilot-gate results.
@@ -17,7 +17,7 @@ Every idea receives:
 
 ## Evidence checklist by dimension
 
-The written anchors in `rubric.md` determine the integer dimension score. Use the questions below to test whether the anchor is actually supported; do not average checklist answers into false precision.
+Use the questions below to investigate the dimensions. Apply the fixed criteria, weights, rating anchors, and verification factors in `verification-scorecard.md`; use `rubric.md` for dimension summaries and verdict interpretation.
 
 ### Demand — 25 points
 
@@ -101,7 +101,7 @@ All four gates and plausibly positive full-cost economics are required for a `pi
 
 Bands describe evidence strength, not an automatic verdict.
 
-| Total or lower bound | Interpretation | Normal commitment |
+| Verified score | Interpretation | Normal commitment |
 |---:|---|---|
 | 0–29 | Weak or contradicted case | Deprioritize or materially re-scope. |
 | 30–49 | Early signal with major uncertainty | Cheap discovery only. |
@@ -109,7 +109,7 @@ Bands describe evidence strength, not an automatic verdict.
 | 65–79 | Strong candidate | Pilot only if every gate passes. |
 | 80–100 | Very strong evidence | Scale carefully; verify repeatability and operational economics. |
 
-When a score is a range, use the lower bound for commitment decisions. Do not rank ideas by an assumed midpoint. Compare lower bound, confidence, maturity stage, failed gates, top unknown, and cost of the next test.
+Apply the commitment limit from Evidence Coverage as well as these bands. Rank comparable ideas by verified score, then evidence coverage, pilot gates, downside ROI points, maturity, and next-test cost/time. Never let assumed scenarios outrank representative evidence without an explicit warning.
 
 ## Confidence rules
 
