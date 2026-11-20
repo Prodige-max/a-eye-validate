@@ -14,6 +14,18 @@ In clients with skill mentions, select `$validate`.
 
 The skill uses the session's hosted web search and, when authorized, its Notion connection. It requires no Windows host, Docker daemon, crawler subscription, job worker, or separate model API.
 
+## Bounded web collector
+
+Validate includes a robots-aware collector that converts approved public seed pages and bounded same-host links into auditable JSONL. Hosted search remains responsible for broad discovery; the collector does not bypass access controls or turn page counts into market evidence automatically.
+
+```bash
+python3 .agents/skills/validate/scripts/collect_web.py \
+  --seed-file /tmp/validate-seeds.txt \
+  --output /tmp/validate-corpus.jsonl
+```
+
+The default limit is 40 pages at depth one, with a per-host delay and response-size cap. Private network targets and unsafe redirects are rejected. See [web-collection.md](.agents/skills/validate/references/web-collection.md) for operating rules. Keep real corpora outside the repository.
+
 ## Notion setup
 
 Authorize a Notion connection with search, read, and page-creation access. Supply an editable parent or database, preferably named **A-EYE Industry Research**. The recommended database fields and the idempotent save procedure are in [notion-setup.md](.agents/skills/validate/references/notion-setup.md).
@@ -30,10 +42,11 @@ Python 3.10 or later is sufficient; the checks use only the standard library.
 
 ```bash
 python3 .agents/skills/validate/scripts/check_fixture.py
+python3 .agents/skills/validate/scripts/check_collector.py
 python3 .agents/skills/validate/scripts/validate_run.py .agents/skills/validate/fixtures/valid-run.json
 ```
 
-The deterministic fixture verifies deduplication, supply classification, freshness, ROI arithmetic, score ranges, degraded modes, and idempotent retry behavior. `validate_run.py` checks portable run records before persistence.
+The deterministic fixtures verify deduplication, supply classification, freshness, ROI arithmetic, score ranges, degraded modes, idempotent retry behavior, HTML normalization, and collector network boundaries. `validate_run.py` checks portable run records before persistence.
 
 ## Deployment checklist
 
