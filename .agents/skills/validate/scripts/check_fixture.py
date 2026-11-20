@@ -19,6 +19,7 @@ REPORT_TEMPLATE = ROOT / "references" / "report-template.md"
 REQUIRED_REFERENCES = (
     ROOT / "references" / "interview-baseline.md",
     ROOT / "references" / "idea-scorecard.md",
+    ROOT / "references" / "verification-scorecard.md",
     ROOT / "references" / "notion-setup.md",
     ROOT / "references" / "run-record.schema.json",
     ROOT / "references" / "web-collection.md",
@@ -65,11 +66,12 @@ def roi(inputs: dict) -> dict[str, float]:
             "year_one_roi_percent": year_one_roi_percent}
 
 
-def score_range(scores: dict) -> tuple[float, float]:
-    weights = {"demand": 25, "unmet_need": 25, "net_savings": 30, "feasibility": 20}
-    lower = sum(scores[key] * weight / 5 for key, weight in weights.items() if scores[key] is not None)
-    upper = lower + sum(weight for key, weight in weights.items() if scores[key] is None)
-    return lower, upper
+def verified_score(criteria: list[dict]) -> tuple[float, float]:
+    factors = {"verified": 1, "strong": 0.9, "moderate": 0.7,
+               "weak": 0.4, "assumed": 0.2, "missing": 0}
+    score = sum(row["points"] for row in criteria)
+    coverage = sum(row["weight"] * factors[row["verification"]] for row in criteria)
+    return score, coverage
 
 
 def main() -> None:
@@ -86,6 +88,8 @@ def main() -> None:
     assert "Independent external research not completed" in skill_text
     assert "scripts/validate_run.py" in skill_text
     assert "references/idea-scorecard.md" in skill_text
+    assert "references/verification-scorecard.md" in skill_text
+    assert "Before every new market test, ask two or three concise calibration questions" in skill_text
     assert "## Portable run record" in report_text
     assert "### Scoring diagnostics" in report_text
     assert "## Supplied-claim verification" in report_text
@@ -99,25 +103,27 @@ def main() -> None:
         "annual_hours": 600.0, "capacity_zar": 180000.0, "recurring_zar": 120000.0,
         "year_one_zar": 40000.0, "payback_months": 8.0, "year_one_roi_percent": 0}
     assert abs(roi_result["year_one_roi_percent"] - 28.5714285714) < 1e-9
-    assert score_range(data["scores"]) == (43.0, 73.0)
     run_record = json.loads(VALID_RUN.read_text(encoding="utf-8"))
+    assert verified_score(run_record["criterion_scores"]) == (43.0, 70.0)
     assert validate_run_record(run_record) == []
     wrong_score = deepcopy(run_record)
-    wrong_score["score"]["high"] = 72
-    assert any("calculated upper bound 73/100" in error for error in validate_run_record(wrong_score))
+    wrong_score["score"]["value"] = 42
+    assert any("calculated verified score 43/100" in error for error in validate_run_record(wrong_score))
+    wrong_points = deepcopy(run_record)
+    wrong_points["criterion_scores"][0]["points"] = 5.5
+    assert any("points must equal calculated value 5.6" in error for error in validate_run_record(wrong_points))
     premature_pilot = deepcopy(run_record)
     premature_pilot["verdict"] = "pilot"
     assert any("all four pilot gates" in error for error in validate_run_record(premature_pilot))
     hypothetical_roi = deepcopy(run_record)
     hypothetical_roi["dimension_scores"]["net_savings"] = 3
-    hypothetical_roi["score"] = {"low": 61, "high": 61}
     assert any("known net_savings requires measured, sourced, or mixed ROI" in error
                for error in validate_run_record(hypothetical_roi))
     degraded = data["degraded"]
     assert degraded["web_search_available"] is False and degraded["unsupported_counts"] == "unknown"
     assert degraded["notion_write_available"] is False and degraded["fallback_complete"] is True
     for section in ("## Decision summary", "## Search log and coverage", "## Observed demand",
-                    "## Supply and remaining pain", "## Business case", "## Score",
+                    "## Supply and remaining pain", "## Business case", "## Verified score",
                     "## Supplied-claim verification", "## Source-level evidence", "## Persistence"):
         assert section in report_text, f"Markdown fallback missing {section}"
     retry = degraded["save_retry"]
@@ -126,8 +132,8 @@ def main() -> None:
     print("PASS skill fixture: demand/supply deduplication and coverage")
     print("PASS freshness: E6 refresh required; E7 current")
     print("PASS ROI: 600 h; R180,000 capacity; R40,000 year one; 28.57%; 8 months")
-    print("PASS score: 43-73/100")
-    print("PASS score enforcement: arithmetic, ROI evidence and pilot gates")
+    print("PASS verified score: 43/100; evidence coverage: 70/100")
+    print("PASS score enforcement: criterion arithmetic, ROI evidence and pilot gates")
     print("PASS degraded modes: unknown counts, Markdown fallback, idempotent retry")
 
 
