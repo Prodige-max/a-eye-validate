@@ -81,8 +81,11 @@ Coverage gaps: <buyer/geography/workflow/source gap>.
 | Annual recurring net economic value | ... | ... | ... |
 | Year-one net economic value | ... | ... | ... |
 | Economic payback | ... | ... | ... |
+| Year-one economic ROI | ...% | ...% | ...% |
+| Year-one cash ROI | unknown/...% | unknown/...% | unknown/...% |
 
 Cash savings: <separate supported amount or unknown>.  
+ROI basis: <measured/sourced/mixed/hypothetical/unknown>; buyer hurdle: <documented threshold or unknown>.  
 Major sensitivities: <inputs>.  
 Buyer data needed: <measurements needed to validate assumptions>.
 
@@ -92,7 +95,7 @@ Buyer data needed: <measurements needed to validate assumptions>.
 |---|---:|---:|---:|---|---|
 | Demand | 25 | ... | ... | ... | ... |
 | Unmet need | 25 | ... | ... | ... | ... | ... |
-| Net savings | 30 | .../unknown | ... | ... | ... |
+| Net savings (includes ROI) | 30 | .../unknown | ... | ... | low/base/high ROI, hurdle, payback, realization and evidence quality |
 | Feasibility | 20 | ... | ... | ... | ... | ... |
 
 **Total:** <N or L–U>/100  
@@ -105,7 +108,7 @@ Buyer data needed: <measurements needed to validate assumptions>.
 |---|---|---|---|
 | Demand | buyer fit, firsthand pattern, frequency, severity, workarounds, buying signal, baseline quality | ... | ... |
 | Unmet need | direct coverage, incumbent outcome, substitutes, gap materiality, access/switching, differentiation, defensibility | ... | ... |
-| Net savings | baseline, gross value, full cost, downside, realization, payback, sensitivity | ... | ... |
+| Net savings | baseline, gross value, full cost, downside, realization, low/base/high ROI, ROI basis, buyer hurdle, payback, sensitivity | ... | ... |
 | Feasibility | data, integration, accuracy/exceptions, security/compliance, adoption, delivery, approval route | ... | ... |
 
 **Market-test stage:** <stage and why the next stage is not yet complete>.  
@@ -133,6 +136,6 @@ The machine-readable fixture is `fixtures/acceptance.json`; `scripts/check_fixtu
 
 Expected results: 2 distinct complainants, 2 affected identifiable organizations, 1 unknown-identity firsthand item, 2 verified offerings, 1 direct fit, and the 31-day feature claim marked for refresh.
 
-The fixture's base ROI inputs are 10,000 cases/month, 20% eligible, 50% adoption, 3 net minutes saved, R300/hour, R60,000/year running cost, and R80,000 one-time cost. Expected outputs are 600 hours/year, R180,000 annual capacity value, R120,000 annual recurring net economic value, R40,000 year-one net economic value, and 8 months economic payback. Scores 4, 3, unknown, and 2 produce 43–73/100.
+The fixture's base ROI inputs are 10,000 cases/month, 20% eligible, 50% adoption, 3 net minutes saved, R300/hour, R60,000/year running cost, and R80,000 one-time cost. Expected outputs are 600 hours/year, R180,000 annual capacity value, R120,000 annual recurring net economic value, R40,000 year-one net economic value, 28.57% year-one economic ROI, and 8 months economic payback. Scores 4, 3, unknown, and 2 produce 43–73/100.
 
 Degraded expectations: unavailable web search makes unsupported counts `unknown`; unavailable Notion write yields a complete Markdown fallback; retrying an uncertain save preserves the original run ID and updates the page found by that ID.
