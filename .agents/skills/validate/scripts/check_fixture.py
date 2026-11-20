@@ -73,8 +73,13 @@ def main() -> None:
         assert phrase in skill_text.split("---", 2)[1]
     assert all(path.is_file() for path in REQUIRED_REFERENCES)
     assert "## Capability preflight" in skill_text
+    assert "## Independent research requirement" in skill_text
+    assert "Every Validate run must perform fresh independent external research" in skill_text
+    assert "Independent external research not completed" in skill_text
     assert "scripts/validate_run.py" in skill_text
     assert "## Portable run record" in report_text
+    assert "## Supplied-claim verification" in report_text
+    assert "**Independent research:** completed | partial" in report_text
     assert observed_counts(data["evidence"]) == {
         "complainants": 2, "organizations": 2, "unknown_identity": 1, "offerings": 2, "direct_fit": 1}
     assert stale_feature_ids(data) == ["E6"]
@@ -88,7 +93,7 @@ def main() -> None:
     assert degraded["notion_write_available"] is False and degraded["fallback_complete"] is True
     for section in ("## Decision summary", "## Search log and coverage", "## Observed demand",
                     "## Supply and remaining pain", "## Business case", "## Score",
-                    "## Source-level evidence", "## Persistence"):
+                    "## Supplied-claim verification", "## Source-level evidence", "## Persistence"):
         assert section in report_text, f"Markdown fallback missing {section}"
     retry = degraded["save_retry"]
     assert retry["original_run_id"] == retry["retry_run_id"]
