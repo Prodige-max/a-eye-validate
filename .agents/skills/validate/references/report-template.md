@@ -14,12 +14,21 @@ Use Markdown that pastes cleanly into Notion. Do not omit sections; use `unknown
 **Currency:** <currency>
 **Independent research:** completed | partial — <fresh searches and limiting capability>
 
+## Calibration questions
+
+| Question | Operator answer | Assumption if unanswered | Criteria affected |
+|---|---|---|---|
+| <buyer/scope question> | ... | ... | ... |
+| <workflow/baseline question> | ... | ... | ... |
+| <candidate/commitment question, when material> | ... | ... | ... |
+
 ## Decision summary
 
 - Observed sample: <complainants or unknown> identifiable firsthand complainants; <organizations or unknown> identifiable affected organizations; <unknown-identity items or unknown> relevant unknown-identity firsthand items
 - Supply sample: <offerings or unknown> verified offerings; <direct or unknown> direct fit
 - Evidence lifecycle: <reused> reused; <refreshed> refreshed; <new> new
-- Score: <N/100 or L–U/100>
+- Verified Market Score: <N/100>
+- Evidence Coverage: <N/100 — fragile/developing/decision-useful/investment-grade>
 - Confidence: <low/medium/high> — <limiting factors>
 - Market-test stage: <hypothesis/public evidence/buyer discovery/baseline validated/controlled pilot/repeatability proven>
 - Verdict: <pilot/interview first/re-scope/deprioritize>
@@ -89,16 +98,40 @@ ROI basis: <measured/sourced/mixed/hypothetical/unknown>; buyer hurdle: <documen
 Major sensitivities: <inputs>.  
 Buyer data needed: <measurements needed to validate assumptions>.
 
-## Score
+## Verified score
 
-| Dimension | Weight | Score | Points/range | Evidence IDs | Rationale |
-|---|---:|---:|---:|---|---|
-| Demand | 25 | ... | ... | ... | ... |
-| Unmet need | 25 | ... | ... | ... | ... | ... |
-| Net savings (includes ROI) | 30 | .../unknown | ... | ... | low/base/high ROI, hurdle, payback, realization and evidence quality |
-| Feasibility | 20 | ... | ... | ... | ... | ... |
+| Criterion | Dimension | Weight | Rating | Verification | Factor | Verified points | Evidence IDs | Rationale |
+|---|---|---:|---:|---|---:|---:|---|---|
+| Buyer-fit pain | Demand | 7 | .../unknown | verified/strong/moderate/weak/assumed/missing | ... | ... | ... | ... |
+| Frequency and severity | Demand | 7 | .../unknown | ... | ... | ... | ... | ... |
+| Workaround burden | Demand | 5 | .../unknown | ... | ... | ... | ... | ... |
+| Buying intent | Demand | 6 | .../unknown | ... | ... | ... | ... | ... |
+| Remaining incumbent gap | Unmet need | 8 | .../unknown | ... | ... | ... | ... | ... |
+| Substitute inadequacy | Unmet need | 6 | .../unknown | ... | ... | ... | ... | ... |
+| Material differentiation | Unmet need | 6 | .../unknown | ... | ... | ... | ... | ... |
+| Access and switching | Unmet need | 5 | .../unknown | ... | ... | ... | ... | ... |
+| Operating baseline | Net savings | 5 | .../unknown | ... | ... | ... | ... | ... |
+| Base year-one ROI | Net savings | 8 | .../unknown | ... | ... | ... | ... | ... |
+| Downside resilience | Net savings | 6 | .../unknown | ... | ... | ... | ... | ... |
+| Payback and hurdle | Net savings | 4 | .../unknown | ... | ... | ... | ... | ... |
+| Value realization | Net savings | 4 | .../unknown | ... | ... | ... | ... | ... |
+| Full cost and sensitivity | Net savings | 3 | .../unknown | ... | ... | ... | ... | ... |
+| Data access | Feasibility | 4 | .../unknown | ... | ... | ... | ... | ... |
+| Integration route | Feasibility | 4 | .../unknown | ... | ... | ... | ... | ... |
+| Accuracy and review | Feasibility | 4 | .../unknown | ... | ... | ... | ... | ... |
+| Security and compliance | Feasibility | 3 | .../unknown | ... | ... | ... | ... | ... |
+| Workflow adoption | Feasibility | 3 | .../unknown | ... | ... | ... | ... | ... |
+| Delivery and support | Feasibility | 2 | .../unknown | ... | ... | ... | ... | ... |
 
-**Total:** <N or L–U>/100  
+| Dimension | Weight | Verified points | Summary anchor | Key limitation |
+|---|---:|---:|---:|---|
+| Demand | 25 | ... | .../5 or unknown | ... |
+| Unmet need | 25 | ... | .../5 or unknown | ... |
+| Net savings (includes ROI) | 30 | ... | .../5 or unknown | ... |
+| Feasibility | 20 | ... | .../5 or unknown | ... |
+
+**Verified Market Score:** <N>/100  
+**Evidence Coverage:** <N>/100 — <reliability and commitment limit>  
 **Confidence:** <rating and rationale>  
 **Pilot gates:** pain <yes/no>; incumbent comparison <yes/no>; validated baseline <yes/no>; integration route <yes/no>.
 
@@ -136,6 +169,6 @@ The machine-readable fixture is `fixtures/acceptance.json`; `scripts/check_fixtu
 
 Expected results: 2 distinct complainants, 2 affected identifiable organizations, 1 unknown-identity firsthand item, 2 verified offerings, 1 direct fit, and the 31-day feature claim marked for refresh.
 
-The fixture's base ROI inputs are 10,000 cases/month, 20% eligible, 50% adoption, 3 net minutes saved, R300/hour, R60,000/year running cost, and R80,000 one-time cost. Expected outputs are 600 hours/year, R180,000 annual capacity value, R120,000 annual recurring net economic value, R40,000 year-one net economic value, 28.57% year-one economic ROI, and 8 months economic payback. Scores 4, 3, unknown, and 2 produce 43–73/100.
+The fixture's base ROI inputs are 10,000 cases/month, 20% eligible, 50% adoption, 3 net minutes saved, R300/hour, R60,000/year running cost, and R80,000 one-time cost. Expected outputs are 600 hours/year, R180,000 annual capacity value, R120,000 annual recurring net economic value, R40,000 year-one net economic value, 28.57% year-one economic ROI, and 8 months economic payback. If all criteria within the four dimensions are respectively rated 4, 3, unknown, and 2 with verified evidence for every known rating, the result is 43/100 with 70/100 evidence coverage.
 
 Degraded expectations: unavailable web search makes unsupported counts `unknown`; unavailable Notion write yields a complete Markdown fallback; retrying an uncertain save preserves the original run ID and updates the page found by that ID.
