@@ -61,7 +61,11 @@ Search separately for (1) firsthand complaints, consequences, and workarounds; (
 
 This search is mandatory even when the operator supplies a detailed report or when fresh Notion evidence exists. Refresh at least one decision-critical external source in each applicable group and record unsuccessful searches when suitable independent evidence cannot be found.
 
-Start with no more than 12 queries and inspect no more than 40 URLs across the three groups. Expand only when a named coverage gap is decision-critical. Log every query actually run, its group and date window; log inspected, inaccessible, rejected, and accepted sources.
+Use staged discovery. Start with up to 12 broad queries and 40 inspected URLs across the three groups. When evidence coverage remains below 70%, a criterion lacks independent support, complaint prevalence is unclear, or a named market gap is decision-critical, expand to as many as 40 total queries and 100 inspected URLs. Stop earlier only when new queries repeat known sources or cannot change a criterion, verdict, or next experiment. Log every query actually run, its group, target filter and date window; log inspected, inaccessible, rejected, duplicate, and accepted sources.
+
+Build query families rather than repeating generic keywords. Combine the exact workflow and local terminology with target filters such as `site:`, `filetype:pdf`, quoted phrases, job title, industry, company size, ERP/accounting platform, regulator, audit finding, annual report, tender, procurement, case study, forum, review, pricing, integration, exception, error, rework, approval, reconciliation, and month-end close. Search important industries separately. Follow citations to the original survey or buyer document. Search snippets and result totals remain discovery aids only.
+
+Cover these source classes before calling the search comprehensive: identifiable buyer/practitioner accounts; anonymous firsthand items; buyer annual reports, audit findings and tenders; independent benchmarks or industry bodies; current official competitor documentation and pricing; implementation case studies; product reviews/support forums; and evidence of residual pain after an incumbent is in use. Record which classes were attempted and which remained empty.
 
 Prefer practitioner accounts, buyer documents, credible independent benchmarks, and official product documentation. A vendor page may establish its own features or price, but not independent proof of buyer pain or realized savings. Mark publication date unknown when it cannot be verified.
 
