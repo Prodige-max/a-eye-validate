@@ -17,5 +17,7 @@ jobs:
           python-version: "3.12"
       - name: Check deterministic fixture
         run: python3 .agents/skills/validate/scripts/check_fixture.py
+      - name: Check bounded web collector
+        run: python3 .agents/skills/validate/scripts/check_collector.py
       - name: Check portable run record
         run: python3 .agents/skills/validate/scripts/validate_run.py .agents/skills/validate/fixtures/valid-run.json
