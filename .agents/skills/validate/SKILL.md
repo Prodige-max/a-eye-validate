@@ -96,9 +96,10 @@ annual_capacity_value = annual_hours_recovered * loaded_hourly_staffing_cost
 annual_recurring_net_economic_value = annual_capacity_value + independently_verified_annual_savings - annual_running_costs
 year_one_net_economic_value = annual_recurring_net_economic_value - one_time_implementation_costs
 simple_payback_months = one_time_implementation_costs / (annual_recurring_net_economic_value / 12)
+year_one_roi_percent = year_one_net_economic_value / (annual_running_costs + one_time_implementation_costs) * 100
 ```
 
-Calculate payback only when recurring net value is positive. `net_minutes_saved` must already subtract review, exceptions, and rework. Keep realizable cash savings separate from released staff capacity; do not double count. Call capacity-based payback **economic payback**. Claim cash payback only with a positive, supported cash-flow case. Leave a result unknown when required inputs are missing, or label the scenario explicitly hypothetical. Do not award a known net-savings score from hypothetical inputs alone. Show the largest sensitivities and the buyer measurements needed to replace assumptions.
+Calculate payback only when recurring net value is positive and ROI only when total year-one cost is positive. Report low, base, and high year-one ROI. `net_minutes_saved` must already subtract review, exceptions, and rework. Keep realizable cash savings separate from released staff capacity; do not double count. Call ROI and payback based partly on released capacity **economic ROI** and **economic payback**. Claim **cash ROI** or cash payback only with a positive, supported cash-flow case. Record whether the ROI basis is measured, sourced, mixed, hypothetical, or unknown. Leave a result unknown when required inputs are missing. Hypothetical ROI must not earn a known net-savings score. Show the largest sensitivities and the buyer measurements needed to replace assumptions.
 
 ### 7. Score and apply the interview gate
 
@@ -106,7 +107,7 @@ Use the written anchors and verdict rules in `references/rubric.md` plus the evi
 
 For an unknown dimension, show a range: zero contribution at the lower endpoint and its full weight at the upper endpoint. Do not hide uncertainty behind a midpoint. Rate confidence separately from the score.
 
-Record all four dimension scores explicitly, the market-test maturity stage, each pilot gate, any red-flag override, and the bounded next experiment. For portfolio comparisons, use the lower score bound, confidence, maturity, failed gates and experiment cost; never rank an unknown range by its midpoint.
+Record all four dimension scores explicitly, low/base/high year-one ROI and its evidence basis, the market-test maturity stage, each pilot gate, any red-flag override, and the bounded next experiment. Net Savings is the ROI-bearing dimension: apply its written anchors to full-cost ROI, payback, realization, and baseline quality without adding a separate ROI bonus or double-counting economics. For portfolio comparisons, use the lower score bound, confidence, maturity, failed gates and experiment cost; never rank an unknown range by its midpoint.
 
 A **pilot** requires all four gates: verified buyer pain, comparison with incumbents, a validated operating baseline, and a plausible integration/approval route. Without all four, the verdict cannot be pilot. Hypothetical positive economics may justify **interview first**, not pilot. When interviews are needed, prescribe a bounded round using the questions and measurement worksheet in `references/interview-baseline.md`.
 
