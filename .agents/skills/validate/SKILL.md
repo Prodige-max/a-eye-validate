@@ -7,7 +7,7 @@ description: Research market validation, workflow gaps, competitors, buyer savin
 
 Produce an evidence-bounded market-validation decision, not a market-size claim. The repository contains the method; web search supplies current public evidence; the operator's authorized Notion destination holds run history.
 
-Read [references/rubric.md](references/rubric.md) before scoring, [references/report-template.md](references/report-template.md) before composing or saving a report, [references/interview-baseline.md](references/interview-baseline.md) before recommending buyer discovery, and [references/notion-setup.md](references/notion-setup.md) before persistence.
+Read [references/rubric.md](references/rubric.md) before scoring, [references/report-template.md](references/report-template.md) before composing or saving a report, [references/interview-baseline.md](references/interview-baseline.md) before recommending buyer discovery, [references/web-collection.md](references/web-collection.md) before collecting source pages, and [references/notion-setup.md](references/notion-setup.md) before persistence.
 
 ## Invocation and inputs
 
@@ -48,6 +48,8 @@ Search separately for (1) firsthand complaints, consequences, and workarounds; (
 Start with no more than 12 queries and inspect no more than 40 URLs across the three groups. Expand only when a named coverage gap is decision-critical. Log every query actually run, its group and date window; log inspected, inaccessible, rejected, and accepted sources.
 
 Prefer practitioner accounts, buyer documents, credible independent benchmarks, and official product documentation. A vendor page may establish its own features or price, but not independent proof of buyer pain or realized savings. Mark publication date unknown when it cannot be verified.
+
+When broader page-level coverage is decision-critical and the repository runtime has network access, follow `references/web-collection.md`. Use hosted search for discovery, then pass an approved bounded seed list to `scripts/collect_web.py`. Review its JSONL output before accepting evidence; never convert collected pages directly into demand or supply counts.
 
 ### 4. Count observed demand
 
