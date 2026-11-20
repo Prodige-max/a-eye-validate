@@ -29,6 +29,14 @@
     "net_savings": null,
     "feasibility": 2
   },
+  "roi": {
+    "basis": "hypothetical",
+    "low_percent": null,
+    "base_percent": 28.5714285714,
+    "high_percent": null,
+    "base_payback_months": 8,
+    "cash_realization": false
+  },
   "score": {"low": 43, "high": 73},
   "confidence": "medium",
   "market_test_stage": "public evidence",
